@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import AuthModal from "./AuthModal";
 import logo from "/public/vercel.png";
-import styles from "./styles.module.scss";
+import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
 type Button = {
   title: string;
@@ -27,18 +27,20 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.navbar}>
-        <Link href="/">
-          <Image
-            src={logo}
-            width={0}
-            height={0}
-            style={{
-              width: "auto",
-              height: "100%",
-            }}
-            alt="На главную страницу"
-          />
-        </Link>
+        <div className={styles.leftContainer}>
+          <Link href="/">
+            <Image
+              src={logo}
+              width={0}
+              height={0}
+              style={{
+                width: "auto",
+                height: "100%",
+              }}
+              alt="На главную страницу"
+            />
+          </Link>
+        </div>
         <ul>
           {buttons.map((button) => {
             return (

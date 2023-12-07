@@ -3,8 +3,15 @@ $navbarHeight: 5rem;
   width: 100%;
   height: $navbarHeight;
   display: flex;
+  justify-content: center;
+  border-color: black;
+  border-style: solid;
+  border-width: 0 0 4px 0;
+  .leftContainer {
+    width: 50%;
+    margin-left: 10px;
+  }
   a {
-    height: 100%;
     text-decoration: none;
     color: white;
   }
@@ -12,7 +19,13 @@ $navbarHeight: 5rem;
     @extend a;
   }
   ul {
+    justify-content: flex-end;
     display: flex;
+    height: 100%;
+    width: 50%;
+    align-items: center;
+    gap: 10px;
+    margin-right: 10px;
     li {
       padding: 2px;
     }
