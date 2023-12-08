@@ -1,7 +1,21 @@
 .priceTable {
   width: 60rem;
   text-align: center;
-  tr {
-    border-bottom: 5px solid black;
+  border-collapse: collapse;
+
+  td,
+  th {
+    border-bottom: 1px solid slategray;
+    padding: 10px;
+  }
+  th {
+    background-color: #0b1426;
+  }
+  td {
+    background-color: rgba(17, 153, 250, 0.05);
+    cursor: pointer;
+  }
+  td:hover {
+    background-color: rgba(17, 153, 250, 0.12);
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./priceTable.module.scss";
+import FavoriteButton from "./FavoriteButton";
 type cryptoData = {
   iconURL: string;
   name: string;
@@ -13,6 +14,7 @@ const PriceTable = () => {
     <table className={styles.priceTable}>
       <thead>
         <tr>
+          <th></th>
           <th>#</th>
           <th></th>
           <th>Имя</th>
@@ -25,11 +27,14 @@ const PriceTable = () => {
         {data.map((crypto, index) => {
           return (
             <tr key={index}>
+              <td>
+                <FavoriteButton id={index} />
+              </td>
               <td>{index}</td>
               <td>{crypto.iconURL}</td>
               <td>{crypto.name}</td>
-              <td>{crypto.price}</td>
-              <td>{crypto.change}</td>
+              <td>${crypto.price}</td>
+              <td>{crypto.change}%</td>
               <td>{crypto.graph}</td>
             </tr>
           );
