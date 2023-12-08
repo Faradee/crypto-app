@@ -2,6 +2,10 @@
   width: 60rem;
   text-align: center;
   border-collapse: collapse;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
   td,
   th {
     border-bottom: 1px solid slategray;
@@ -17,7 +21,7 @@
     background-color: rgba(17, 153, 250, 0.05);
     cursor: pointer;
   }
-  td:hover {
+  tr:hover {
     background-color: rgba(17, 153, 250, 0.12);
   }
 }

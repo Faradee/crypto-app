@@ -11,10 +11,15 @@ type cryptoData = {
   changePercent24Hr: string;
 };
 const PriceTable = () => {
-  const url = "https://api.coincap.io/v2/assets";
   const [data, setData] = useState<cryptoData[]>();
+  const getIconUrl = (symbol: string) => {
+    //API возвращает IOTA а иконка хранится с идентификатором MIOTA
+    if (symbol.toLowerCase() === "iota") symbol = "miota";
+    return `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png`;
+  };
   useEffect(() => {
     const fetchData = async () => {
+      const url = "https://api.coincap.io/v2/assets";
       const headers = new Headers({
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
@@ -59,16 +64,7 @@ const PriceTable = () => {
                   <FavoriteButton id={index} />
                 </td>
                 <td>{crypto.rank}</td>
-                <td>
-                  {
-                    <Image
-                      src={`https://assets.coincap.io/assets/icons/${crypto.symbol.toLowerCase()}@2x.png`}
-                      width={40}
-                      height={40}
-                      alt={crypto.symbol}
-                    />
-                  }
-                </td>
+                <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
                 <td>{crypto.name}</td>
                 <td>${crypto.priceUsd}</td>
                 <td>{crypto.changePercent24Hr}%</td>
