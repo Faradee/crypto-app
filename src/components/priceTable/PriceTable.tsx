@@ -7,8 +7,8 @@ type cryptoData = {
   rank: string;
   symbol: string;
   name: string;
-  priceUsd: string;
-  changePercent24Hr: string;
+  priceUsd: number;
+  changePercent24Hr: number;
 };
 const PriceTable = () => {
   const [data, setData] = useState<cryptoData[]>();
@@ -34,8 +34,8 @@ const PriceTable = () => {
           rank: crypto.rank,
           symbol: crypto.symbol,
           name: crypto.name,
-          priceUsd: crypto.priceUsd,
-          changePercent24Hr: crypto.changePercent24Hr,
+          priceUsd: parseFloat(crypto.priceUsd),
+          changePercent24Hr: parseFloat(crypto.changePercent24Hr),
         };
       });
       setData(newData);
@@ -66,8 +66,8 @@ const PriceTable = () => {
                 <td>{crypto.rank}</td>
                 <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
                 <td>{crypto.name}</td>
-                <td>${crypto.priceUsd}</td>
-                <td>{crypto.changePercent24Hr}%</td>
+                <td>${crypto.priceUsd.toFixed(2)}</td>
+                <td>{crypto.changePercent24Hr.toFixed(2)}%</td>
               </tr>
             );
           })}
