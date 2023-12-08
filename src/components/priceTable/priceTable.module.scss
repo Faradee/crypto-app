@@ -2,11 +2,13 @@
   width: 60rem;
   text-align: center;
   border-collapse: collapse;
-
   td,
   th {
     border-bottom: 1px solid slategray;
     padding: 10px;
+    vertical-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   th {
     background-color: #0b1426;
@@ -18,4 +20,9 @@
   td:hover {
     background-color: rgba(17, 153, 250, 0.12);
   }
+}
+.favoriteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
