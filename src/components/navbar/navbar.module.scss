@@ -7,7 +7,7 @@ $navbarHeight: 5rem;
   border-bottom: 4px solid black;
   .leftContainer {
     width: 50%;
-    margin-left: 10px;
+    margin-left: 10rem;
   }
   .optionList {
     justify-content: flex-end;
@@ -16,9 +16,13 @@ $navbarHeight: 5rem;
     width: 50%;
     align-items: center;
     gap: 10px;
-    margin-right: 10px;
+    margin-right: 10rem;
     li {
-      padding: 2px;
+      padding: 10px;
+      transition: background-color 0.05s;
+    }
+    li:hover {
+      background-color: rgba(255, 255, 255, 0.08);
     }
   }
 }
