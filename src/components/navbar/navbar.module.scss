@@ -4,21 +4,12 @@ $navbarHeight: 5rem;
   height: $navbarHeight;
   display: flex;
   justify-content: center;
-  border-color: black;
-  border-style: solid;
-  border-width: 0 0 4px 0;
+  border-bottom: 4px solid black;
   .leftContainer {
     width: 50%;
     margin-left: 10px;
   }
-  a {
-    text-decoration: none;
-    color: white;
-  }
-  a:visited {
-    @extend a;
-  }
-  ul {
+  .optionList {
     justify-content: flex-end;
     display: flex;
     height: 100%;

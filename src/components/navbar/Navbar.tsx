@@ -41,7 +41,7 @@ const Navbar = () => {
             />
           </Link>
         </div>
-        <ul>
+        <ul className={styles.optionList}>
           {buttons.map((button) => {
             return (
               <li key={button.url}>

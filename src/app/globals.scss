@@ -9,3 +9,10 @@ html {
 li {
   list-style-type: none;
 }
+a {
+  text-decoration: none;
+  color: white;
+}
+a:visited {
+  @extend a;
+}
