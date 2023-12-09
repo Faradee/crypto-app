@@ -8,9 +8,32 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Favorite {
+  cryptoId String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+
+  @@id([cryptoId, userId])
+}
+
+model Transaction {
+  cryptoId  String
+  price     Int
+  timestamp Int
+  amount    Int
+  inbound   Boolean
+  userId    String
+  user      User    @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+
+  @@id([cryptoId, userId])
+}
+
 model User {
-  uuid      String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  password  String
+  uuid         String        @id @default(uuid())
+  email        String        @unique
+  createdAt    DateTime      @default(now())
+  password     String
+  favorites    Favorite[]
+  transactions Transaction[]
 }
