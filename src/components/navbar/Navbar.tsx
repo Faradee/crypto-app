@@ -53,7 +53,7 @@ const Navbar = () => {
         <div></div>
       </nav>
       {isAuth && <AuthModal />}
-      <span className="styles.navbarIndent" />
+      <div className={styles.navbarIndent} />
     </>
   );
 };

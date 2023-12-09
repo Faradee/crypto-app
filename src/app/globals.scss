@@ -1,5 +1,4 @@
-$primaryColor: #12192b;
-$secondaryColor: #0b1426;
+@use "./variables.scss" as *;
 * {
   padding: 0;
   margin: 0;
@@ -9,7 +8,7 @@ li {
 }
 html {
   color-scheme: dark;
-  background-color: #12192b;
+  background-color: $primaryColor;
 }
 a {
   text-decoration: none;

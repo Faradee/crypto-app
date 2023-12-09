@@ -1,8 +1,10 @@
-$navbarHeight: 5rem;
+@use "variables.scss" as *;
 .navbar {
   width: 100%;
   height: $navbarHeight;
+  position: fixed;
   display: flex;
+  background-color: $primaryColor;
   justify-content: center;
   border-bottom: 4px solid black;
   .leftContainer {
@@ -25,6 +27,11 @@ $navbarHeight: 5rem;
       background-color: rgba(255, 255, 255, 0.08);
     }
   }
+}
+.navbarIndent {
+  height: $navbarHeight;
+  width: 100%;
+  margin-bottom: 5px;
 }
 .list > li {
   display: flex;
