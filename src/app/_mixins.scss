@@ -11,3 +11,15 @@
     @content;
   }
 }
+//TODO: finish writing textfield styles if i don't get sent to the army lol
+@mixin textfield {
+  margin-bottom: 0.5rem;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 20px;
+  border: none;
+  padding: 0.5rem;
+  outline: none;
+}
