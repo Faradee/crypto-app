@@ -1,4 +1,3 @@
-@use "mixins.scss" as *;
 .dim {
   width: 100vw;
   height: 100vh;
@@ -13,16 +12,6 @@
   display: flex;
   z-index: 30;
   transform: translate(-50%, -50%);
-  border-radius: 100px;
-  gap: 10px;
-  background-color: white;
+  border-radius: 20px;
   align-items: center;
-  @include smScreen {
-    width: 75%;
-    padding: 1rem;
-  }
-  @include lgScreen {
-    width: 25%;
-    padding: 4rem;
-  }
 }
