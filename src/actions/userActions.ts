@@ -91,7 +91,7 @@ export const signUser = async (userData: zod.infer<typeof signInSchema>) => {
   if (validate.success) {
     const foundUser = await prisma.user.findFirst({
       where: {
-        email: userData.name,
+        email: userData.email,
       },
     });
     if (foundUser !== null && (await argon2.verify(foundUser.password, userData.password))) {

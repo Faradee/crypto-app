@@ -27,18 +27,15 @@
       background-color: rgba(255, 255, 255, 0.08);
     }
   }
+  button {
+    background-color: transparent;
+    border: transparent;
+    font-weight: bold;
+    font-size: 16px;
+  }
 }
 .navbarIndent {
   height: $navbarHeight;
   width: 100%;
   margin-bottom: 5px;
-}
-.list > li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-  width: 100%;
-  height: 100%;
 }

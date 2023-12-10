@@ -1,20 +1,25 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, createContext } from "react";
 import AuthModal from "./AuthModal";
 import logo from "/public/vercel.png";
 import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
+import Button from "../forms/Button";
 type Button = {
   title: string;
   url: string;
   icon?: IconType;
 };
+type User = {
+  uuid: string;
+};
 const Navbar = () => {
-  const [isNav, setNav] = useState<boolean>(false);
-  const [isAuth, setAuth] = useState<boolean>(false);
-
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [user, setUser] = useState<User>();
+  const contextValue = { user, setUser };
+  const UserContext = createContext<typeof contextValue>(contextValue);
   const buttons = [
     {
       title: "Создать объявление",
@@ -25,7 +30,7 @@ const Navbar = () => {
   ] as Button[];
 
   return (
-    <>
+    <UserContext.Provider value={contextValue}>
       <nav className={styles.navbar}>
         <div className={styles.leftContainer}>
           <Link href="/">
@@ -49,12 +54,17 @@ const Navbar = () => {
               </li>
             );
           })}
+          <li>
+            <button className={styles.signIn} onClick={() => setIsAuth(true)}>
+              Войти
+            </button>
+          </li>
         </ul>
-        <div></div>
+        {isAuth && <AuthModal setIsAuth={setIsAuth} />}
       </nav>
-      {isAuth && <AuthModal />}
+
       <div className={styles.navbarIndent} />
-    </>
+    </UserContext.Provider>
   );
 };
 

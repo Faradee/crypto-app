@@ -10,6 +10,9 @@ html {
   color-scheme: dark;
   background-color: $primaryColor;
 }
+button {
+  cursor: pointer;
+}
 a {
   text-decoration: none;
   color: white;
