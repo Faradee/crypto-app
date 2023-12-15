@@ -1,5 +1,6 @@
 import { IconType } from "react-icons";
-import styles from "./formField.module.scss";
+import styles from "./formfield.module.scss";
+import { iconColor } from "@/app/variables";
 export type FormFieldProps = {
   type: "text" | "password" | "email" | "number" | "textarea" | "boolean";
   icon?: IconType;
@@ -50,7 +51,7 @@ const FormField = (props: FormFieldProps) => {
           : {}
       }
     >
-      {Icon && <Icon />}
+      {Icon && <Icon color={iconColor} size={16} />}
 
       {type === "textarea" ? (
         <textarea

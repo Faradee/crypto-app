@@ -55,7 +55,7 @@ const Navbar = () => {
             );
           })}
           <li>
-            <button className={styles.signIn} onClick={() => setIsAuth(true)}>
+            <button className={styles.auth} onClick={() => setIsAuth(true)}>
               Войти
             </button>
           </li>

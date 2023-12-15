@@ -1,0 +1,13 @@
+@use "variables.scss" as *;
+.button {
+  width: 100%;
+  height: 100%;
+  border-radius: $roundedRadius;
+  background-color: $accentedColor;
+  text-align: center;
+  border: none;
+  padding: 1rem;
+}
+.button:hover {
+  background-color: lighten($color: $accentedColor, $amount: 3);
+}

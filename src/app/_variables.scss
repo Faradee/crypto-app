@@ -1,6 +1,13 @@
 $primaryColor: #12192b;
 $secondaryColor: #0b1426;
+$accentedColor: lighten(
+  $color: $primaryColor,
+  $amount: 25,
+);
 $navbarHeight: 5rem;
 $fontSize: 16px;
+$mdFontSize: 20px;
 $lgFontSize: 32px;
-$inputBackground: #a9a9a9;
+$inputBackground: #d2d2d2;
+$textColor: #000;
+$roundedRadius: 15px;

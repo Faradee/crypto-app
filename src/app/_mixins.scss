@@ -5,6 +5,11 @@
     @content;
   }
 }
+@mixin mdScreen {
+  @media screen and (min-width: 480px) and (max-width: 1000px) {
+    @content;
+  }
+}
 //Десктопный стиль
 @mixin lgScreen {
   @media screen and (min-width: 1000px) {
@@ -15,11 +20,13 @@
 @mixin textfield {
   margin-bottom: 0.5rem;
   display: flex;
-  width: 100%;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 20px;
+  border-radius: $roundedRadius;
   border: none;
   padding: 0.5rem;
   outline: none;
+  white-space: pre-line;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

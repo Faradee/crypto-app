@@ -1,12 +1,11 @@
-import React from "react";
+import styles from "./button.module.scss";
 type ButtonProps = {
   onClick: (...args: any[]) => void;
   title: string;
-  color?: string;
   submit?: boolean;
   className?: string;
 };
-const Button = ({ onClick, title, color, submit, className }: ButtonProps) => {
+const Button = ({ onClick, title, submit, className }: ButtonProps) => {
   return (
     <button
       type={submit ? "submit" : "button"}
@@ -15,13 +14,7 @@ const Button = ({ onClick, title, color, submit, className }: ButtonProps) => {
         e.preventDefault();
         onClick();
       }}
-      className={
-        className
-          ? className
-          : `h-12 w-full rounded-md font-semibold text-white ${
-              color ? color : "bg-red-600 hover:bg-red-700 active:bg-red-800"
-            }`
-      }
+      className={className ? className : styles.button}
     >
       {title}
     </button>

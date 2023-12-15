@@ -7,7 +7,9 @@ import Button from "../forms/Button";
 import { signInSchema, signUpSchema, userSchema } from "@/actions/userSchemas";
 import zod from "zod";
 import LoadingContext from "../loader/LoadingContext";
+import { iconColor } from "@/app/variables";
 import { AiFillLock, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import styles from "./auth.module.scss";
 const AuthForm = ({
   auth,
   setAuth,
@@ -66,7 +68,7 @@ const AuthForm = ({
   const [error, setError] = useState<string>("");
   const { email, password, confirmPassword, isSignup, showPassword } = auth;
   return (
-    <form id="auth">
+    <form className={styles.form} id="auth">
       <FormField
         placeholder="Email адрес"
         type="email"
@@ -84,8 +86,12 @@ const AuthForm = ({
         icon={AiFillLock}
       >
         {!isSignup && (
-          <div className="cursor-pointer" onClick={handleShowPassword}>
-            {showPassword ? <AiFillEye size={24} /> : <AiFillEyeInvisible size={24} />}
+          <div className={styles.visibilitySwitch} onClick={handleShowPassword}>
+            {showPassword ? (
+              <AiFillEye color={iconColor} size={20} />
+            ) : (
+              <AiFillEyeInvisible color={iconColor} size={20} />
+            )}
           </div>
         )}
       </FormField>
@@ -98,7 +104,7 @@ const AuthForm = ({
           name="confirmPassword"
         />
       )}
-      {error && <span className="flex justify-center text-center text-red-500">{error}</span>}
+      {error && <span className={styles.error}>{error}</span>}
       <Button
         submit
         onClick={isSignup ? () => loadResource(handleSignUp()) : () => loadResource(handleSignIn())}

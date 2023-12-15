@@ -41,13 +41,17 @@ const AuthModal = ({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateActi
           </div>
         )}
 
-        <h1>{isSignup ? "Создание аккаунта" : "Вход"}</h1>
+        <h2>{isSignup ? "Создание аккаунта" : "Вход"}</h2>
         <LoaderWrapper loadingState={[isLoading, setIsLoading]}>
-          <AuthForm setIsAuth={setIsAuth} setAuth={setAuth} auth={auth} />
+          <div className={styles.formContainer}>
+            <AuthForm setIsAuth={setIsAuth} setAuth={setAuth} auth={auth} />
+          </div>
         </LoaderWrapper>
         <div className={styles.switch}>
           {isSignup ? "Есть аккаунт? " : "Не зарегистрированы? "}
-          <span onClick={handleToggle}>{isSignup ? "Войдите" : "Создайте аккаунт"}</span>
+          <span className={styles.submit} onClick={handleToggle}>
+            {isSignup ? "Войдите" : "Создайте аккаунт"}
+          </span>
         </div>
       </div>
     </ModalContainer>
