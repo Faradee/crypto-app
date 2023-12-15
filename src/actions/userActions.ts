@@ -4,7 +4,7 @@ import prisma from "../../db";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import zod from "zod";
-import { userDataSchema, setPasswordSchema, updateUserSchema, signInSchema, signUpSchema } from "./userSchemas";
+import { setPasswordSchema, signInSchema, signUpSchema } from "./userSchemas";
 
 export const verifyToken = async () => {
   const secret = process.env.SECRET!;

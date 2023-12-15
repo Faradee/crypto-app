@@ -27,11 +27,3 @@ export const signInSchema = zod.object({
   email: zod.string().email({ message: "Неправильно указана почта" }),
   password: zod.string().min(4, { message: "Пароль должен состоять минимум из 4 символов" }),
 });
-export const updateUserSchema = userDataSchema
-  .merge(confirmPasswordSchema.partial())
-  .extend({
-    originalPassword: zod.string().optional(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Пароли не совпадают",
-  });
