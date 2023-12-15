@@ -19,7 +19,7 @@
   row-gap: 0.5rem;
   height: 100%;
   width: 20vw;
-  padding: 1rem;
+  padding: 2rem 0;
   min-width: 300px;
   border-radius: $roundedRadius;
   @include lgScreen {
@@ -54,7 +54,7 @@
   display: block;
 }
 .formContainer {
-  padding: 1rem;
+  padding: 0 16%;
 }
 .close {
   position: absolute;
