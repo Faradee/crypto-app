@@ -1,4 +1,4 @@
-import styles from "./page.module.scss";
+import styles from "./root.module.scss";
 import PriceTable from "@/components/priceTable/PriceTable";
 export type cryptoData = {
   rank: string;

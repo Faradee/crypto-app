@@ -1,0 +1,16 @@
+@use "variables.scss" as *;
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.notFound {
+  display: flex;
+  height: $subNavbarHeight;
+  width: 100%;
+  justify-items: center;
+  justify-content: center;
+}
+.main {
+  margin-top: 5px;
+}
