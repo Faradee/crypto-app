@@ -4,6 +4,11 @@
   display: flex;
   justify-content: center;
 }
+.loadingContainer {
+  height: $subNavbarHeight;
+  width: 100%;
+  position: relative;
+}
 .notFound {
   display: flex;
   height: $subNavbarHeight;

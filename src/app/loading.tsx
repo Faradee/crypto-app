@@ -1,8 +1,8 @@
 import Loader from "@/components/loader/Loader";
-
+import styles from "./root.module.scss";
 const Loading = () => {
   return (
-    <div>
+    <div className={styles.loadingContainer}>
       <Loader />
     </div>
   );

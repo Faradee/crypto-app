@@ -56,7 +56,6 @@ const Navbar = () => {
               <button
                 className={styles.auth}
                 onClick={() => {
-                  console.log(user);
                   setUser(undefined);
                 }}
               >
