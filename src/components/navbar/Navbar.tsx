@@ -1,25 +1,22 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, createContext } from "react";
+import { useState } from "react";
 import AuthModal from "./AuthModal";
 import logo from "/public/vercel.png";
 import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
 import Button from "../forms/Button";
+import UserContext, { User } from "./UserContext";
 type Button = {
   title: string;
   url: string;
   icon?: IconType;
 };
-type User = {
-  uuid: string;
-};
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState<User>();
   const contextValue = { user, setUser };
-  const UserContext = createContext<typeof contextValue>(contextValue);
   const buttons = [
     {
       title: "Создать объявление",
@@ -55,9 +52,21 @@ const Navbar = () => {
             );
           })}
           <li>
-            <button className={styles.auth} onClick={() => setIsAuth(true)}>
-              Войти
-            </button>
+            {user ? (
+              <button
+                className={styles.auth}
+                onClick={() => {
+                  console.log(user);
+                  setUser(undefined);
+                }}
+              >
+                Выйти
+              </button>
+            ) : (
+              <button className={styles.auth} onClick={() => setIsAuth(true)}>
+                Войти
+              </button>
+            )}
           </li>
         </ul>
         {isAuth && <AuthModal setIsAuth={setIsAuth} />}

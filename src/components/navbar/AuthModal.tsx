@@ -30,30 +30,32 @@ const AuthModal = ({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateActi
   const handleToggle = () => {
     setAuth({ ...initialAuth, isSignup: !isSignup });
   };
-  useClickOutside(modalRef, () => setIsAuth(false));
+  useClickOutside(modalRef, !isLoading ? () => setIsAuth(false) : () => {});
   return (
     <ModalContainer>
-      <div ref={modalRef} className={styles.container}>
-        <Image className="" src={logo} width={50} height={50} alt="Logo" />
-        {!isLoading && (
-          <div onClick={() => setIsAuth(false)} className={styles.close}>
-            <AiOutlineClose size={40} color="white" />
-          </div>
-        )}
+      <LoaderWrapper loadingState={[isLoading, setIsLoading]}>
+        <div ref={modalRef} className={styles.container}>
+          <Image className="" src={logo} width={50} height={50} alt="Logo" />
+          {!isLoading && (
+            <div onClick={() => setIsAuth(false)} className={styles.close}>
+              <AiOutlineClose size={40} color="white" />
+            </div>
+          )}
 
-        <h2>{isSignup ? "Создание аккаунта" : "Вход"}</h2>
-        <LoaderWrapper loadingState={[isLoading, setIsLoading]}>
+          <h2>{isSignup ? "Создание аккаунта" : "Вход"}</h2>
+
           <div className={styles.formContainer}>
             <AuthForm setIsAuth={setIsAuth} setAuth={setAuth} auth={auth} />
           </div>
-        </LoaderWrapper>
-        <div className={styles.switch}>
-          {isSignup ? "Есть аккаунт? " : "Не зарегистрированы? "}
-          <span className={styles.submit} onClick={handleToggle}>
-            {isSignup ? "Войдите" : "Создайте аккаунт"}
-          </span>
+
+          <div className={styles.switch}>
+            {isSignup ? "Есть аккаунт? " : "Не зарегистрированы? "}
+            <span className={styles.submit} onClick={handleToggle}>
+              {isSignup ? "Войдите" : "Создайте аккаунт"}
+            </span>
+          </div>
         </div>
-      </div>
+      </LoaderWrapper>
     </ModalContainer>
   );
 };

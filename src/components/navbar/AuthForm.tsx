@@ -10,6 +10,7 @@ import LoadingContext from "../loader/LoadingContext";
 import { iconColor } from "@/app/variables";
 import { AiFillLock, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import styles from "./auth.module.scss";
+import UserContext, { User } from "./UserContext";
 const AuthForm = ({
   auth,
   setAuth,
@@ -19,6 +20,11 @@ const AuthForm = ({
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
   setAuth: React.Dispatch<React.SetStateAction<Auth>>;
 }) => {
+  const { user, setUser } = useContext(UserContext);
+  const loadResource = useContext(LoadingContext);
+  const [error, setError] = useState<string>("");
+  const { email, password, confirmPassword, isSignup, showPassword } = auth;
+
   const handleShowPassword = () => {
     setAuth({ ...auth, showPassword: !showPassword });
   };
@@ -33,6 +39,7 @@ const AuthForm = ({
       const validate = userSchema.safeParse(fetchedUser);
       if (validate.success) {
         setIsAuth(false);
+        setUser(fetchedUser as User);
       } else setError(fetchedUser as string);
     } else setError(validate.error.issues[0].message);
   };
@@ -48,6 +55,7 @@ const AuthForm = ({
       const validated = userSchema.safeParse(createdUser);
       if (validated.success) {
         setIsAuth(false);
+        setUser(createdUser as User);
         return;
       } else setError("Ошибка при создании акаунта, попробуйте еще раз");
     } else setError(validate.error.issues[0].message);
@@ -64,9 +72,6 @@ const AuthForm = ({
     setAuthProp(e);
     setError("");
   };
-  const loadResource = useContext(LoadingContext);
-  const [error, setError] = useState<string>("");
-  const { email, password, confirmPassword, isSignup, showPassword } = auth;
   return (
     <form className={styles.form} id="auth">
       <FormField
