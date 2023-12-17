@@ -17,6 +17,7 @@ type Button = {
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const { authorized, setAuthorized } = useContext(AuthContext);
+
   const buttons = [
     { title: "Избранное", url: "?favorites=user" },
     { title: "Мои объявления", url: "?posts=user" },

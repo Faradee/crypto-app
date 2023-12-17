@@ -1,8 +1,8 @@
 "use client";
 import { createContext } from "react";
 const AuthContext = createContext<{
-  authorized: boolean;
-  setAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
-}>({ authorized: false, setAuthorized: () => {} });
+  authorized: boolean | undefined;
+  setAuthorized: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+}>({ authorized: undefined, setAuthorized: () => {} });
 
 export default AuthContext;

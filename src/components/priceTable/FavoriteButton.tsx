@@ -6,7 +6,7 @@ import { getFavorite, setFavorite, unsetFavorite } from "@/actions/assetActions"
 import AuthContext from "../navbar/AuthContext";
 const FavoriteButton = ({ id }: { id: string }) => {
   const [favorited, setFavorited] = useState<boolean>(false);
-  const authorized = useContext(AuthContext);
+  const { authorized } = useContext(AuthContext);
   const handleFavorite = async () => {
     const handled = !favorited ? await setFavorite(id) : await unsetFavorite(id);
     if (handled) setFavorited(!favorited);
@@ -27,7 +27,7 @@ const FavoriteButton = ({ id }: { id: string }) => {
   }, [id]);
   return (
     <div onClick={handleFavorite} className={styles.favoriteButton}>
-      {favorited ? <GoStarFill size="20" /> : <GoStar size="20" />}
+      {favorited ? <GoStarFill size="20" /> : <GoStar color={!authorized ? "gray" : "white"} size="20" />}
     </div>
   );
 };

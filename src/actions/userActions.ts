@@ -4,7 +4,7 @@ import prisma from "../../db";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import zod from "zod";
-import { setPasswordSchema, signInSchema, signUpSchema } from "./userSchemas";
+import { signInSchema, signUpSchema } from "./userSchemas";
 
 export const verifyToken = async () => {
   const secret = process.env.SECRET!;
@@ -27,22 +27,17 @@ export const verifyToken = async () => {
   return false;
 };
 
-const setPassword = async (passData: zod.infer<typeof setPasswordSchema>) => {
-  const db = await prisma.user.findFirst({
-    where: {
-      uuid: passData.uuid,
-    },
-  });
-  if (db && (await argon2.verify(db.password, passData.originalPassword))) {
-    await prisma.user.update({
+export const fetchUser = async () => {
+  const uuid = await verifyToken();
+  if (uuid) {
+    const user = await prisma.user.findFirst({
       where: {
-        uuid: passData.uuid,
-      },
-      data: {
-        password: await argon2.hash(passData.password),
+        uuid,
       },
     });
-    return true;
+    if (user) {
+      return true;
+    }
   }
   return false;
 };
