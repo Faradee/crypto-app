@@ -13,15 +13,16 @@ const Asset = ({ crypto }: { crypto: crypto }) => {
   };
   useEffect(() => {
     if (rowRef.current && priceRef.current) {
+      rowRef.current.className = "";
       if (priceRef.current > crypto.priceUsd) rowRef.current.className = styles.flashRed;
       else if (priceRef.current < crypto.priceUsd) rowRef.current.className = styles.flashGreen;
-      setTimeout(() => {
+      const flash = setTimeout(() => {
         rowRef.current!.className = "";
       }, 500);
+      return () => clearInterval(flash);
     }
-
     priceRef.current = crypto.priceUsd;
-  }, [crypto]);
+  }, [crypto.priceUsd]);
   return (
     <tr ref={rowRef}>
       <td>

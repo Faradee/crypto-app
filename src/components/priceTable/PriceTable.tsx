@@ -2,8 +2,6 @@
 import styles from "./priceTable.module.scss";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { cryptoData } from "@/app/page";
-import FavoriteButton from "./FavoriteButton";
-import Image from "next/image";
 import Asset from "./Asset";
 const PriceTable = ({ data }: { data: cryptoData }) => {
   const [currentData, setCurrentData] = useState<cryptoData>(data);
@@ -13,11 +11,7 @@ const PriceTable = ({ data }: { data: cryptoData }) => {
     const assets = Object.keys(currentData).join(",");
     return `wss://ws.coincap.io/prices?assets=${assets}`;
   }, [currentData]);
-  const getIconUrl = (symbol: string) => {
-    //API возвращает IOTA а иконка хранится с идентификатором MIOTA
-    if (symbol.toLowerCase() === "iota") symbol = "miota";
-    return `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png`;
-  };
+  //TODO: CONFIRM CORRECT WEBSOCKET CONNECTION BEHAVIOR IN PRODUCTION
   useEffect(() => {
     priceWsRef.current = new WebSocket(url);
     priceWsRef.current.onopen = () => {
@@ -26,14 +20,18 @@ const PriceTable = ({ data }: { data: cryptoData }) => {
     priceWsRef.current.onclose = () => {
       console.log("Closing Websocket connection");
     };
+    priceWsRef.current.onerror = () => {
+      console.log("Connection with the server has failed");
+    };
     const wsCurrent = priceWsRef.current;
-    return () => wsCurrent.close();
+    return () => {
+      wsCurrent.close();
+    };
   }, [url]);
   useEffect(() => {
     if (!priceWsRef.current) return;
     priceWsRef.current.onmessage = (message) => {
       const data = JSON.parse(message.data);
-
       const newData: cryptoData = {};
       //TODO: ADD MATHEMATIC CHANGE TO CHANGE IN 24H
       Object.keys(data).map((key) => {
