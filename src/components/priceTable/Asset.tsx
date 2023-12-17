@@ -32,7 +32,11 @@ const Asset = ({ crypto }: { crypto: crypto }) => {
       <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
       <td>{crypto.name}</td>
       <td>${crypto.priceUsd.toFixed(2)}</td>
-      <td>{crypto.changePercent24Hr.toFixed(2)}%</td>
+      <td
+        className={crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""}
+      >
+        {crypto.changePercent24Hr.toFixed(2)}%
+      </td>
     </tr>
   );
 };

@@ -34,6 +34,12 @@
 .flashRed {
   background-color: rgba(255, 60, 60, 0.5);
 }
+.increase {
+  color: rgb(0, 255, 0);
+}
+.decrease {
+  color: rgb(255, 0, 0);
+}
 .favoriteButton {
   display: flex;
   justify-content: center;
