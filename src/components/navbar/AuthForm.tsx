@@ -10,7 +10,11 @@ import LoadingContext from "../loader/LoadingContext";
 import { iconColor } from "@/app/variables";
 import { AiFillLock, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import styles from "./auth.module.scss";
-import UserContext, { User } from "./UserContext";
+import AuthContext from "./AuthContext";
+type User = {
+  uuid: string;
+  email: string;
+};
 const AuthForm = ({
   auth,
   setAuth,
@@ -20,7 +24,8 @@ const AuthForm = ({
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
   setAuth: React.Dispatch<React.SetStateAction<Auth>>;
 }) => {
-  const { user, setUser } = useContext(UserContext);
+  const [user, setUser] = useState<User>();
+  const { setAuthorized } = useContext(AuthContext);
   const loadResource = useContext(LoadingContext);
   const [error, setError] = useState<string>("");
   const { email, password, confirmPassword, isSignup, showPassword } = auth;
@@ -40,6 +45,7 @@ const AuthForm = ({
       if (validate.success) {
         setIsAuth(false);
         setUser(fetchedUser as User);
+        setAuthorized(true);
       } else setError(fetchedUser as string);
     } else setError(validate.error.issues[0].message);
   };
@@ -56,6 +62,7 @@ const AuthForm = ({
       if (validated.success) {
         setIsAuth(false);
         setUser(createdUser as User);
+        setAuthorized(true);
         return;
       } else setError("Ошибка при создании акаунта, попробуйте еще раз");
     } else setError(validate.error.issues[0].message);
@@ -73,7 +80,21 @@ const AuthForm = ({
     setError("");
   };
   return (
-    <form className={styles.form} id="auth">
+    <form
+      onSubmit={
+        isSignup
+          ? (e) => {
+              e.preventDefault();
+              loadResource(handleSignUp());
+            }
+          : (e) => {
+              e.preventDefault();
+              loadResource(handleSignIn());
+            }
+      }
+      className={styles.form}
+      id="auth"
+    >
       <FormField
         placeholder="Email адрес"
         type="email"
@@ -110,11 +131,7 @@ const AuthForm = ({
         />
       )}
       {error && <span className={styles.error}>{error}</span>}
-      <Button
-        submit
-        onClick={isSignup ? () => loadResource(handleSignUp()) : () => loadResource(handleSignIn())}
-        title={isSignup ? "Создать аккаунт" : "Войти"}
-      />
+      <Button submit title={isSignup ? "Создать аккаунт" : "Войти"} />
     </form>
   );
 };

@@ -40,7 +40,7 @@ const PriceTable = ({ data }: { data: cryptoData }) => {
         newData[key] = {
           ...currentData[key],
           priceUsd: data[key],
-          changePercent24Hr: (currentData[key].changePercent24Hr + 1) * (data[key] / currentData[key].priceUsd) - 1,
+          // changePercent24Hr: currentData[key].changePercent24Hr * (data[key] / currentData[key].priceUsd),
         };
       });
 

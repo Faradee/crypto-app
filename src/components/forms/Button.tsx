@@ -1,6 +1,6 @@
 import styles from "./button.module.scss";
 type ButtonProps = {
-  onClick: (...args: any[]) => void;
+  onClick?: (...args: any[]) => void;
   title: string;
   submit?: boolean;
   className?: string;
@@ -10,10 +10,14 @@ const Button = ({ onClick, title, submit, className }: ButtonProps) => {
     <button
       type={submit ? "submit" : "button"}
       title={title}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick();
-      }}
+      onClick={
+        onClick
+          ? (e) => {
+              e.preventDefault();
+              onClick();
+            }
+          : () => {}
+      }
       className={className ? className : styles.button}
     >
       {title}

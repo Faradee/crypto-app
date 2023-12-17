@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AuthModal from "./AuthModal";
 import logo from "/public/vercel.png";
 import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
 import Button from "../forms/Button";
-import UserContext, { User } from "./UserContext";
+import AuthContext from "./AuthContext";
+import { signUserOut } from "@/actions/userActions";
 type Button = {
   title: string;
   url: string;
@@ -15,19 +16,17 @@ type Button = {
 };
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [user, setUser] = useState<User>();
-  const contextValue = { user, setUser };
+  const { authorized, setAuthorized } = useContext(AuthContext);
   const buttons = [
-    {
-      title: "Создать объявление",
-      url: "create",
-    },
     { title: "Избранное", url: "?favorites=user" },
     { title: "Мои объявления", url: "?posts=user" },
   ] as Button[];
-
+  const handleSignOut = () => {
+    signUserOut();
+    setAuthorized(false);
+  };
   return (
-    <UserContext.Provider value={contextValue}>
+    <>
       <nav className={styles.navbar}>
         <div className={styles.leftContainer}>
           <Link href="/">
@@ -52,18 +51,13 @@ const Navbar = () => {
             );
           })}
           <li>
-            {user ? (
-              <button
-                className={styles.auth}
-                onClick={() => {
-                  setUser(undefined);
-                }}
-              >
-                Выйти
-              </button>
-            ) : (
+            {!authorized ? (
               <button className={styles.auth} onClick={() => setIsAuth(true)}>
                 Войти
+              </button>
+            ) : (
+              <button className={styles.auth} onClick={handleSignOut}>
+                Выйти
               </button>
             )}
           </li>
@@ -72,7 +66,7 @@ const Navbar = () => {
       </nav>
 
       <div className={styles.navbarIndent} />
-    </UserContext.Provider>
+    </>
   );
 };
 
