@@ -26,12 +26,12 @@ const Asset = ({ crypto }: { crypto: crypto }) => {
   return (
     <tr ref={rowRef}>
       <td>
-        <FavoriteButton id={parseInt(crypto.rank)} />
+        <FavoriteButton id={crypto.id} />
       </td>
       <td>{crypto.rank}</td>
       <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
       <td>{crypto.name}</td>
-      <td>${crypto.priceUsd.toFixed(2)}</td>
+      <td>${crypto.priceUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
       <td
         className={crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""}
       >

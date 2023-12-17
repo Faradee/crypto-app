@@ -22,9 +22,8 @@ model Transaction {
   price     Int
   timestamp Int
   amount    Int
-  inbound   Boolean
   userId    String
-  user      User    @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [uuid], onDelete: Cascade)
 
   @@id([cryptoId, userId])
 }

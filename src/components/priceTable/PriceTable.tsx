@@ -1,8 +1,9 @@
 "use client";
-import styles from "./priceTable.module.scss";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { cryptoData } from "@/app/page";
 import Asset from "./Asset";
+import styles from "./priceTable.module.scss";
+
 const PriceTable = ({ data }: { data: cryptoData }) => {
   const [currentData, setCurrentData] = useState<cryptoData>(data);
   const priceWsRef = useRef<WebSocket | null>(null);
@@ -11,7 +12,7 @@ const PriceTable = ({ data }: { data: cryptoData }) => {
     const assets = Object.keys(currentData).join(",");
     return `wss://ws.coincap.io/prices?assets=${assets}`;
   }, [currentData]);
-  //TODO: CONFIRM CORRECT WEBSOCKET CONNECTION BEHAVIOR IN PRODUCTION
+  //Из за стрикт мода первое подключение всегда будет проваливатся в development, в production должно вести себя правильно
   useEffect(() => {
     priceWsRef.current = new WebSocket(url);
     priceWsRef.current.onopen = () => {
@@ -39,7 +40,7 @@ const PriceTable = ({ data }: { data: cryptoData }) => {
         newData[key] = {
           ...currentData[key],
           priceUsd: data[key],
-          changePercent24Hr: currentData[key].changePercent24Hr * (data[key] / currentData[key].priceUsd),
+          changePercent24Hr: (currentData[key].changePercent24Hr + 1) * (data[key] / currentData[key].priceUsd) - 1,
         };
       });
 

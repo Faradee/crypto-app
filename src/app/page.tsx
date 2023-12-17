@@ -1,6 +1,7 @@
 import styles from "./root.module.scss";
 import PriceTable from "@/components/priceTable/PriceTable";
 export type crypto = {
+  id: string;
   rank: string;
   symbol: string;
   name: string;
@@ -21,6 +22,7 @@ export default async function Home() {
     const newData: cryptoData = {};
     data.map((crypto: any) => {
       newData[crypto.id] = {
+        id: crypto.id,
         rank: crypto.rank,
         symbol: crypto.symbol,
         name: crypto.name,
