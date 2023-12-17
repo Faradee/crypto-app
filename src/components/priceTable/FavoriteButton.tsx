@@ -13,7 +13,7 @@ const FavoriteButton = ({ id }: { id: string }) => {
   };
   useEffect(() => {
     const fetchFavorite = async () => {
-      const favorited = await getFavorite(id);
+      const favorited = authorized ? await getFavorite(id) : false;
       setFavorited(favorited);
     };
     fetchFavorite();
