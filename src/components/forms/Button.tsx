@@ -1,26 +1,33 @@
+"use client";
+import { useState } from "react";
 import styles from "./button.module.scss";
+import Spinner from "./Spinner";
+
 type ButtonProps = {
-  onClick?: (...args: any[]) => void;
+  onClick: (...args: any[]) => void | Promise<void>;
   title: string;
   submit?: boolean;
   className?: string;
+  async?: boolean;
 };
-const Button = ({ onClick, title, submit, className }: ButtonProps) => {
+const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleAsync = async () => {
+    if (async) setLoading(true);
+    await onClick();
+    setLoading(false);
+  };
   return (
     <button
       type={submit ? "submit" : "button"}
       title={title}
-      onClick={
-        onClick
-          ? (e) => {
-              e.preventDefault();
-              onClick();
-            }
-          : () => {}
-      }
+      onClick={(e) => {
+        e.preventDefault();
+        if (!loading) handleAsync();
+      }}
       className={className ? className : styles.button}
     >
-      {title}
+      {loading ? <Spinner /> : title}
     </button>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, memo, useRef } from "react";
 import FavoriteButton from "./FavoriteButton";
 import Image from "next/image";
 import styles from "./priceTable.module.scss";
-import { Crypto } from "@/app/page";
+import { Crypto } from "@/actions/assetActions";
 import AssetDetails from "./AssetDetails";
 //TODO: ADD DETAILS WITH GRAPHS AND TRANSACTION CREATION
 //TODO: PUT FAVORITE QUERYING TO IT'S PARENT FOR ALL FAVORITE DATA

@@ -1,24 +1,27 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
 .priceTable {
+  @include boxShadow;
   width: 60rem;
   text-align: center;
   border-collapse: collapse;
+  margin-bottom: 1rem;
   img {
     display: block;
     margin: 0 auto;
   }
   td,
   th {
-    border-bottom: 1px solid slategray;
+    background-color: $secondaryColor;
+
     padding: 10px;
     vertical-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  th {
-    background-color: #0b1426;
-  }
   tr {
     transition: background-color 250ms;
+    border-bottom: 1px solid slategray;
   }
   td {
     background-color: rgba(17, 153, 250, 0.05);
@@ -39,6 +42,9 @@
 }
 .decrease {
   color: rgb(255, 0, 0);
+}
+.tableContainer {
+  margin-bottom: 1rem;
 }
 .favoriteButton {
   display: flex;

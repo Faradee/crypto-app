@@ -6,7 +6,6 @@ import AuthModal from "./AuthModal";
 import logo from "/public/vercel.png";
 import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
-import Button from "../forms/Button";
 import AuthContext from "./AuthContext";
 import { signUserOut } from "@/actions/userActions";
 type Button = {

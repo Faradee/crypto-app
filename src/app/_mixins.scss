@@ -30,3 +30,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+@mixin boxShadow {
+  box-shadow: (0, 0, 0, 0.4) 0px 2px 15px -3px;
+  border: medium;
+}

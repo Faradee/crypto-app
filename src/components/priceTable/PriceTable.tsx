@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CryptoData } from "@/app/page";
+import { CryptoData, fetchAssets } from "@/actions/assetActions";
 import Asset from "./Asset";
 import styles from "./priceTable.module.scss";
+import Button from "../forms/Button";
 
 const PriceTable = ({ data }: { data: CryptoData }) => {
   const [currentData, setCurrentData] = useState<CryptoData>(data);
   const priceWsRef = useRef<WebSocket | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>();
+  const [page, setPage] = useState<number>(0);
   const url = useMemo(() => {
     const assets = Object.keys(currentData).join(",");
     return `wss://ws.coincap.io/prices?assets=${assets}`;
@@ -19,6 +21,11 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   const handleIndex = (index: number) => {
     if (activeIndex !== index) setActiveIndex(index);
     else setActiveIndex(undefined);
+  };
+  const handlePagination = async () => {
+    const newData = await fetchAssets(20 * page, 20 * (page + 1));
+    setCurrentData({ ...currentData, ...newData });
+    setPage(page + 1);
   };
   //Из за стрикт мода первое подключение всегда будет проваливатся в development, в production должно вести себя правильно
   useEffect(() => {
@@ -56,34 +63,37 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
     };
   }, [currentData]);
   return (
-    <table className={styles.priceTable}>
-      <thead>
-        <tr>
-          <th></th>
-          <th>#</th>
-          <th></th>
-          <th>Имя</th>
-          <th>Цена</th>
-          <th>Изменение за 24 часа</th>
-        </tr>
-      </thead>
-      <tbody>
-        {currentData &&
-          Object.keys(currentData).map((key, index) => {
-            const crypto = currentData[key];
-            return (
-              <Asset
-                crypto={crypto}
-                key={index}
-                active={handleActive(index)}
-                onClick={() => {
-                  handleIndex(index);
-                }}
-              />
-            );
-          })}
-      </tbody>
-    </table>
+    <div className={styles.tableContainer}>
+      <table className={styles.priceTable}>
+        <thead>
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th></th>
+            <th>Имя</th>
+            <th>Цена</th>
+            <th>Изменение за 24 часа</th>
+          </tr>
+        </thead>
+        <tbody className={styles.tableBody}>
+          {currentData &&
+            Object.keys(currentData).map((key, index) => {
+              const crypto = currentData[key];
+              return (
+                <Asset
+                  crypto={crypto}
+                  key={index}
+                  active={handleActive(index)}
+                  onClick={() => {
+                    handleIndex(index);
+                  }}
+                />
+              );
+            })}
+        </tbody>
+      </table>
+      <Button title="Загрузить еще" onClick={handlePagination} async />
+    </div>
   );
 };
 

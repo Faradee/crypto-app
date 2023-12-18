@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Crypto } from "@/app/page";
+import { Crypto } from "@/actions/assetActions";
 import styles from "./details.module.scss";
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   return (
