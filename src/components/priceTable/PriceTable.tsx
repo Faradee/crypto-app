@@ -9,7 +9,7 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   const [currentData, setCurrentData] = useState<CryptoData>(data);
   const priceWsRef = useRef<WebSocket | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>();
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const url = useMemo(() => {
     const assets = Object.keys(currentData).join(",");
     return `wss://ws.coincap.io/prices?assets=${assets}`;
