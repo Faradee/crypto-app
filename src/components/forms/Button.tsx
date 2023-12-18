@@ -4,7 +4,7 @@ import styles from "./button.module.scss";
 import Spinner from "./Spinner";
 
 type ButtonProps = {
-  onClick: (...args: any[]) => void | Promise<void>;
+  onClick?: (...args: any[]) => void | Promise<void>;
   title: string;
   submit?: boolean;
   className?: string;
@@ -14,7 +14,7 @@ const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const handleAsync = async () => {
     if (async) setLoading(true);
-    await onClick();
+    if (onClick) await onClick();
     setLoading(false);
   };
   return (
