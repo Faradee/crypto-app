@@ -2,12 +2,13 @@ import React, { useEffect, memo, useRef } from "react";
 import FavoriteButton from "./FavoriteButton";
 import Image from "next/image";
 import styles from "./priceTable.module.scss";
-import { crypto } from "@/app/page";
+import { Crypto } from "@/app/page";
+import AssetDetails from "./AssetDetails";
 //TODO: ADD DETAILS WITH GRAPHS AND TRANSACTION CREATION
-const Asset = ({ crypto }: { crypto: crypto }) => {
+//TODO: PUT FAVORITE QUERYING TO IT'S PARENT FOR ALL FAVORITE DATA
+const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);
-
   const getIconUrl = (symbol: string) => {
     //API возвращает IOTA а иконка хранится с идентификатором MIOTA
     if (symbol.toLowerCase() === "iota") symbol = "miota";
@@ -26,20 +27,25 @@ const Asset = ({ crypto }: { crypto: crypto }) => {
     priceRef.current = crypto.priceUsd;
   }, [crypto.priceUsd]);
   return (
-    <tr ref={rowRef}>
-      <td>
-        <FavoriteButton id={crypto.id} />
-      </td>
-      <td>{crypto.rank}</td>
-      <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
-      <td>{crypto.name}</td>
-      <td>${crypto.priceUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td
-        className={crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""}
-      >
-        {crypto.changePercent24Hr.toFixed(2)}%
-      </td>
-    </tr>
+    <>
+      <tr ref={rowRef} onClick={onClick}>
+        <td>
+          <FavoriteButton id={crypto.id} />
+        </td>
+        <td>{crypto.rank}</td>
+        <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
+        <td>{crypto.name}</td>
+        <td>${crypto.priceUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td
+          className={
+            crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""
+          }
+        >
+          {crypto.changePercent24Hr.toFixed(2)}%
+        </td>
+      </tr>
+      {active && <AssetDetails crypto={crypto} icon={getIconUrl(crypto.symbol)} />}
+    </>
   );
 };
 

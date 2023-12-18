@@ -1,6 +1,6 @@
 import styles from "./root.module.scss";
 import PriceTable from "@/components/priceTable/PriceTable";
-export type crypto = {
+export type Crypto = {
   id: string;
   rank: string;
   symbol: string;
@@ -8,8 +8,8 @@ export type crypto = {
   priceUsd: number;
   changePercent24Hr: number;
 };
-export type cryptoData = {
-  [key: string]: crypto;
+export type CryptoData = {
+  [key: string]: Crypto;
 };
 //TODO ADD SEARCH
 export default async function Home() {
@@ -20,7 +20,7 @@ export default async function Home() {
     const url = "https://api.coincap.io/v2/assets";
     const res = await fetch(url, { method: "GET", headers });
     const { data } = await res.json();
-    const newData: cryptoData = {};
+    const newData: CryptoData = {};
     data.map((crypto: any) => {
       newData[crypto.id] = {
         id: crypto.id,
