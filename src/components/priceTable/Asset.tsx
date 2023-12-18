@@ -3,7 +3,7 @@ import FavoriteButton from "./FavoriteButton";
 import Image from "next/image";
 import styles from "./priceTable.module.scss";
 import { crypto } from "@/app/page";
-
+//TODO: ADD DETAILS WITH GRAPHS AND TRANSACTION CREATION
 const Asset = ({ crypto }: { crypto: crypto }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);

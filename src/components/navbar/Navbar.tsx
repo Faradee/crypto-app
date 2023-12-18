@@ -14,6 +14,7 @@ type Button = {
   url: string;
   icon?: IconType;
 };
+//todo: add watched cryptos and dashboard
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const { authorized, setAuthorized } = useContext(AuthContext);

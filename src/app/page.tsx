@@ -11,6 +11,7 @@ export type crypto = {
 export type cryptoData = {
   [key: string]: crypto;
 };
+//TODO ADD SEARCH
 export default async function Home() {
   const fetchData = async () => {
     const headers = new Headers({
