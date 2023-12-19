@@ -5,6 +5,7 @@ export type Crypto = {
   id: string;
   rank: string;
   symbol: string;
+  marketCap: number;
   name: string;
   priceUsd: number;
   changePercent24Hr: number;
@@ -17,19 +18,23 @@ type History = {
   time: number;
   date: string;
 };
+const precisionFloat = (strNum: string) => {
+  return parseFloat(strNum).toPrecision(4);
+};
 //По дефолту фетчится первые 20 криптовалют отсортированных по капитализации
 export const fetchAssets = async (offset: number | string = 0, limit: number | string = 20) => {
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
   const url = `https://api.coincap.io/v2/assets?limit=${limit}`;
-  const res = await fetch(url, { method: "GET", headers });
+  const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data } = await res.json();
   const newData: CryptoData = {};
   data.map((crypto: any) => {
     newData[crypto.id] = {
       id: crypto.id,
       rank: crypto.rank,
+      marketCap: crypto.marketCapUsd,
       symbol: crypto.symbol,
       name: crypto.name,
       priceUsd: parseFloat(crypto.priceUsd),
@@ -43,7 +48,7 @@ export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
   const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}`;
-  const res = await fetch(url, { method: "GET", headers });
+  const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data }: { data: History[] } = await res.json();
   let high = parseFloat(data[0].priceUsd);
   let low = parseFloat(data[0].priceUsd);
@@ -55,7 +60,9 @@ export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
     else if (price < low) low = price;
   });
   average = average / data.length;
-  const change24h = parseFloat(data[0].priceUsd) / parseFloat(data[data.length - 1].priceUsd) - 1;
+  const change24h = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(
+    3
+  );
   return { historyData: data, marketData: { low, high, average, change24h } };
 };
 export const getFavorite = async (cryptoId: string) => {

@@ -1,10 +1,11 @@
 import styles from "./details.module.scss";
-import DetailsSkeleton from "./DetailsSkeleton";
 import localeStringPrice from "./localeStringPrice";
-const DetailsHeader = ({
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+const MarketData = ({
   marketData,
 }: {
-  marketData?: { high: number; low: number; average: number; change24h: number };
+  marketData?: { high: number; low: number; average: number; change24h: string };
 }) => {
   if (marketData)
     return (
@@ -15,11 +16,17 @@ const DetailsHeader = ({
         </div>
         <div className={styles.column}>
           <span>СРЕД: {localeStringPrice(marketData.average)}</span>
-          <span>Изменение за 24 часа: {localeStringPrice(marketData.change24h)}%</span>
+          <span>Изменение: {marketData.change24h}%</span>
         </div>
       </div>
     );
-  else return <DetailsSkeleton />;
+  else
+    return (
+      <div className={styles.details}>
+        <Skeleton containerClassName={styles.column} width={"100%"} count={2} />
+        <Skeleton containerClassName={styles.column} width={"100%"} count={2} />
+      </div>
+    );
 };
 
-export default DetailsHeader;
+export default MarketData;

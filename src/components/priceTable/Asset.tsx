@@ -37,6 +37,7 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
         <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
         <td>{crypto.name}</td>
         <td>${localeStringPrice(crypto.priceUsd)}</td>
+        <td>${Math.floor(crypto.marketCap).toLocaleString()}</td>
         <td
           className={
             crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""

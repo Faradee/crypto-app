@@ -72,6 +72,7 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
             <th></th>
             <th>Имя</th>
             <th>Цена</th>
+            <th>Капитализация</th>
             <th>Изменение за 24 часа</th>
           </tr>
         </thead>

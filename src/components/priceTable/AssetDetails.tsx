@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./details.module.scss";
-import DetailsHeader from "./DetailsHeader";
+import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
@@ -31,8 +31,9 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
               <span>{formattedDate}</span>
             </div>
           </div>
-          <DetailsHeader marketData={history?.marketData} />
+          <MarketData marketData={history?.marketData} />
         </div>
+        <div></div>
       </td>
     </tr>
   );
