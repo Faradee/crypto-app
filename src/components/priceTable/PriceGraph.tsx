@@ -50,8 +50,10 @@ const PriceGraph = ({
             let label;
             switch (range) {
               case "day":
-                label = date.toLocaleString("ru", { minute: "numeric", hour: "numeric", hour12: false });
-                return label;
+                if (!(index % 12)) {
+                  label = date.toLocaleString("ru", { minute: "numeric", hour: "numeric", hour12: false });
+                  return label;
+                } else return undefined;
               case "week":
                 if (!(index % 5)) {
                   label = date.toLocaleString("ru", { minute: "numeric", hour: "numeric", hour12: false });
