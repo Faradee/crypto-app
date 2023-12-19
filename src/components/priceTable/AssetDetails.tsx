@@ -5,7 +5,7 @@ import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
-
+//TODO: ADD BETTER CHANGE DESCRIPTION AND INTERVAL SWITCH
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
   const formattedDate =
@@ -21,7 +21,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
     fetchData();
   }, [crypto.id, interval]);
   return (
-    <tr>
+    <tr className={styles.detailsTr}>
       <td colSpan={7}>
         <div className={styles.headContainer}>
           <div className={styles.title}>
@@ -35,7 +35,9 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           </div>
           <MarketData marketData={history?.marketData} />
         </div>
-        {history?.historyData && <PriceGraph history={history.historyData} />}
+        {history?.historyData && (
+          <PriceGraph color={history.marketData.change24h[0] === "-" ? "red" : "green"} history={history.historyData} />
+        )}
       </td>
     </tr>
   );

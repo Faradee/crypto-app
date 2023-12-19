@@ -18,9 +18,6 @@ type History = {
   time: number;
   date: string;
 };
-const precisionFloat = (strNum: string) => {
-  return parseFloat(strNum).toPrecision(4);
-};
 //По дефолту фетчится первые 20 криптовалют отсортированных по капитализации
 export const fetchAssets = async (offset: number | string = 0, limit: number | string = 20) => {
   const headers = new Headers({
@@ -62,7 +59,7 @@ export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
       currentDate.toLocaleString("ru", { month: "long" }) +
       " " +
       currentDate.getFullYear();
-    if (!(index % 6)) formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: formattedDate });
+    if (!(index % 5)) formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: formattedDate });
     const price = parseFloat(point.priceUsd);
     average += price;
     if (price > high) high = price;

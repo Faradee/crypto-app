@@ -14,7 +14,8 @@ import {
   Filler,
 } from "chart.js";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
-const PriceGraph = ({ history }: { history: any[] }) => {
+//TODO: ADD BETTER TIME DESCRIPTIONS AND RED COLOR WHEN THE CHANGE IS NEGATIVE AND VISE VERSA
+const PriceGraph = ({ history, color }: { history: any[]; color: "red" | "green" }) => {
   const options = {
     scales: {
       y: {
@@ -39,15 +40,15 @@ const PriceGraph = ({ history }: { history: any[] }) => {
         }),
         datasets: [
           {
-            label: "История цены",
+            label: "",
             data: history.map((point, index) => {
               return point.priceUsd;
             }),
             fill: true,
-            borderColor: "rgba(0,255,0,1)",
+            borderColor: color === "green" ? "rgba(0,255,0,1)" : "rgba(255,0,0,1)",
             pointBorderWidth: 1,
             pointRadius: 0,
-            backgroundColor: "rgba(0,255,0,0.2)",
+            backgroundColor: color === "green" ? "rgba(0,255,0,0.2)" : "rgba(255,0,0,0.2)",
           },
         ],
       }}
