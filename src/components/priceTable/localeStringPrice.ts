@@ -7,7 +7,7 @@ export default function localeStringPrice(price: number) {
       .toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumSignificantDigits: floored === 0 ? 6 : undefined,
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 3,
       })
       .toString()
       .substring(1)

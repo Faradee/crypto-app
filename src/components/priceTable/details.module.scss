@@ -25,6 +25,15 @@
 .detailsTr:hover {
   background-color: $primaryColor !important;
 }
+.increase {
+  color: rgb(0, 255, 0) !important;
+}
+.decrease {
+  color: rgb(255, 0, 0) !important;
+}
+.highlight {
+  color: white !important;
+}
 .details {
   width: 50%;
   .column {

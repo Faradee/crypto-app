@@ -16,7 +16,12 @@ const MarketData = ({
         </div>
         <div className={styles.column}>
           <span>СРЕД: {localeStringPrice(marketData.average)}</span>
-          <span>Изменение: {marketData.change24h}%</span>
+          <span>
+            Изменение:{" "}
+            <span className={marketData.change24h[0] === "-" ? styles.decrease : styles.increase}>
+              {marketData.change24h}%
+            </span>
+          </span>
         </div>
       </div>
     );

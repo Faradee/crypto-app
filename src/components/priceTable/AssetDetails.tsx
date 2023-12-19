@@ -5,21 +5,25 @@ import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
-//TODO: ADD BETTER CHANGE DESCRIPTION AND INTERVAL SWITCH
+//TODO:INTERVAL SWITCH
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
-  const formattedDate =
-    currentDate.getDate() + " " + currentDate.toLocaleString("ru", { month: "long" }) + " " + currentDate.getFullYear();
-  //m1- день 1d - год
-  const [interval, setInterval] = useState<string>("m5");
+  const formattedDate = currentDate
+    .toLocaleString("ru", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+    .slice(0, -3);
+  const [range, setRange] = useState<"day" | "week" | "month" | "half-year" | "year">("day");
   const [history, setHistory] = useState<Awaited<ReturnType<typeof fetchAssetHistory>>>();
   useEffect(() => {
     const fetchData = async () => {
-      const history = await fetchAssetHistory(crypto.id, interval);
+      const history = await fetchAssetHistory(crypto.id, range);
       setHistory(history);
     };
     fetchData();
-  }, [crypto.id, interval]);
+  }, [crypto.id, range]);
   return (
     <tr className={styles.detailsTr}>
       <td colSpan={7}>
@@ -36,7 +40,11 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           <MarketData marketData={history?.marketData} />
         </div>
         {history?.historyData && (
-          <PriceGraph color={history.marketData.change24h[0] === "-" ? "red" : "green"} history={history.historyData} />
+          <PriceGraph
+            range={range}
+            history={history.historyData}
+            color={history.marketData.change24h[0] === "-" ? "red" : "green"}
+          />
         )}
       </td>
     </tr>

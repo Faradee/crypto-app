@@ -40,26 +40,49 @@ export const fetchAssets = async (offset: number | string = 0, limit: number | s
   });
   return newData;
 };
-export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
+export const fetchAssetHistory = async (
+  cryptoId: string,
+  range: "day" | "week" | "month" | "half-year" | "year" | "all"
+) => {
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
-  const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}`;
+  const end = Date.now();
+  let interval: string = "m5";
+  let start = new Date();
+  switch (range) {
+    case "day":
+      interval = "m5";
+      start.setDate(start.getDate() - 1);
+      break;
+    case "week":
+      interval = "m30";
+      start.setDate(start.getDate() - 7);
+      break;
+    case "month":
+      interval = "h2";
+      start.setDate(start.getDate() - 30);
+      break;
+    case "half-year":
+      interval = "h12";
+      start.setDate(start.getDate() - 183);
+      break;
+    case "year":
+      interval = "d1";
+      start.setDate(start.getDate() - 365);
+      break;
+  }
+
+  const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}&start=${start.getTime()}&end=${end}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data }: { data: History[] } = await res.json();
   let high = parseFloat(data[0].priceUsd);
   let low = parseFloat(data[0].priceUsd);
   let average = parseFloat(data[0].priceUsd);
-  const formattedHistory: { priceUsd: number; date: string }[] = [];
+  const formattedHistory: { priceUsd: number; date: Date }[] = [];
   data.forEach((point, index) => {
     const currentDate = new Date(point.date);
-    const formattedDate =
-      currentDate.getDate() +
-      " " +
-      currentDate.toLocaleString("ru", { month: "long" }) +
-      " " +
-      currentDate.getFullYear();
-    if (!(index % 5)) formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: formattedDate });
+    formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: currentDate });
     const price = parseFloat(point.priceUsd);
     average += price;
     if (price > high) high = price;
