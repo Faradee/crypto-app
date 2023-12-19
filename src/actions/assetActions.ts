@@ -53,7 +53,16 @@ export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
   let high = parseFloat(data[0].priceUsd);
   let low = parseFloat(data[0].priceUsd);
   let average = parseFloat(data[0].priceUsd);
-  data.forEach((point) => {
+  const formattedHistory: { priceUsd: number; date: string }[] = [];
+  data.forEach((point, index) => {
+    const currentDate = new Date(point.date);
+    const formattedDate =
+      currentDate.getDate() +
+      " " +
+      currentDate.toLocaleString("ru", { month: "long" }) +
+      " " +
+      currentDate.getFullYear();
+    if (!(index % 6)) formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: formattedDate });
     const price = parseFloat(point.priceUsd);
     average += price;
     if (price > high) high = price;
@@ -63,7 +72,7 @@ export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
   const change24h = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(
     3
   );
-  return { historyData: data, marketData: { low, high, average, change24h } };
+  return { historyData: formattedHistory, marketData: { low, high, average, change24h } };
 };
 export const getFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();

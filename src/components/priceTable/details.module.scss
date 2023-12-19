@@ -6,9 +6,21 @@
     display: flex;
     justify-content: flex-start;
   }
-}
-.title {
-  width: 50%;
+  .title {
+    width: 50%;
+  }
+  .column {
+    margin-left: 0.5rem;
+    row-gap: 10px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between !important;
+    .name {
+      font-size: $lgFontSize;
+      font-weight: bold;
+    }
+  }
 }
 .details {
   width: 50%;
@@ -19,17 +31,4 @@
       color: gray;
     }
   }
-}
-.column {
-  margin-left: 0.5rem;
-  row-gap: 10px;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: space-between !important;
-}
-
-.name {
-  font-size: $lgFontSize;
-  font-weight: bold;
 }
