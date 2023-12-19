@@ -1,3 +1,35 @@
+@use "variables.scss" as *;
 .headContainer {
   display: flex;
+  padding: 1rem;
+  div {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+.title {
+  width: 50%;
+}
+.details {
+  width: 50%;
+  .column {
+    span {
+      font-weight: bolder;
+      font-size: $fontSize;
+      color: gray;
+    }
+  }
+}
+.column {
+  margin-left: 0.5rem;
+  row-gap: 10px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between !important;
+}
+
+.name {
+  font-size: $lgFontSize;
+  font-weight: bold;
 }

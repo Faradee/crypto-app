@@ -12,6 +12,11 @@ export type Crypto = {
 export type CryptoData = {
   [key: string]: Crypto;
 };
+type History = {
+  priceUsd: string;
+  time: number;
+  date: string;
+};
 //По дефолту фетчится первые 20 криптовалют отсортированных по капитализации
 export const fetchAssets = async (offset: number | string = 0, limit: number | string = 20) => {
   const headers = new Headers({
@@ -33,7 +38,26 @@ export const fetchAssets = async (offset: number | string = 0, limit: number | s
   });
   return newData;
 };
-
+export const fetchAssetHistory = async (cryptoId: string, interval: string) => {
+  const headers = new Headers({
+    Authorization: `Bearer ${process.env.COINCAP_KEY}`,
+  });
+  const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}`;
+  const res = await fetch(url, { method: "GET", headers });
+  const { data }: { data: History[] } = await res.json();
+  let high = parseFloat(data[0].priceUsd);
+  let low = parseFloat(data[0].priceUsd);
+  let average = parseFloat(data[0].priceUsd);
+  data.forEach((point) => {
+    const price = parseFloat(point.priceUsd);
+    average += price;
+    if (price > high) high = price;
+    else if (price < low) low = price;
+  });
+  average = average / data.length;
+  const change24h = parseFloat(data[0].priceUsd) / parseFloat(data[data.length - 1].priceUsd) - 1;
+  return { historyData: data, marketData: { low, high, average, change24h } };
+};
 export const getFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();
   if (uuid) {

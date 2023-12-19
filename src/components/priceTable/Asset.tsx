@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
 import AssetDetails from "./AssetDetails";
+import localeStringPrice from "./localeStringPrice";
 //TODO: ADD DETAILS WITH GRAPHS AND TRANSACTION CREATION
 //TODO: PUT FAVORITE QUERYING TO IT'S PARENT FOR ALL FAVORITE DATA
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
@@ -13,21 +14,6 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
     //API возвращает IOTA а иконка хранится с идентификатором MIOTA
     if (symbol.toLowerCase() === "iota") symbol = "miota";
     return `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png`;
-  };
-  const handlePrice = (price: number) => {
-    const floored = Math.floor(price);
-    const remainder = price % 1;
-    return (
-      floored.toString() +
-      remainder
-        .toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumSignificantDigits: floored === 0 ? 2 : undefined,
-          maximumFractionDigits: 2,
-        })
-        .toString()
-        .substring(1)
-    );
   };
   useEffect(() => {
     if (rowRef.current && priceRef.current) {
@@ -50,7 +36,7 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
         <td>{crypto.rank}</td>
         <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
         <td>{crypto.name}</td>
-        <td>${handlePrice(crypto.priceUsd)}</td>
+        <td>${localeStringPrice(crypto.priceUsd)}</td>
         <td
           className={
             crypto.changePercent24Hr > 0 ? styles.increase : crypto.changePercent24Hr < 0 ? styles.decrease : ""
