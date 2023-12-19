@@ -11,11 +11,17 @@ const MarketData = ({
     return (
       <div className={styles.details}>
         <div className={styles.column}>
-          <span>МАКС: {localeStringPrice(marketData.high)}</span>
-          <span>МИН: {localeStringPrice(marketData.low)}</span>
+          <span>
+            МАКС: <span className={styles.highlight}>{localeStringPrice(marketData.high)}</span>
+          </span>
+          <span>
+            МИН: <span className={styles.highlight}>{localeStringPrice(marketData.low)}</span>
+          </span>
         </div>
         <div className={styles.column}>
-          <span>СРЕД: {localeStringPrice(marketData.average)}</span>
+          <span>
+            СРЕД: <span className={styles.highlight}>{localeStringPrice(marketData.average)}</span>
+          </span>
           <span>
             Изменение:{" "}
             <span className={marketData.change24h[0] === "-" ? styles.decrease : styles.increase}>
