@@ -5,6 +5,7 @@ import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
+import IntervalSwitch from "./IntervalSwitch";
 //TODO:INTERVAL SWITCH
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
@@ -39,6 +40,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           </div>
           <MarketData marketData={history?.marketData} />
         </div>
+        <IntervalSwitch range={range} setRange={setRange} />
         {history?.historyData && (
           <PriceGraph
             range={range}

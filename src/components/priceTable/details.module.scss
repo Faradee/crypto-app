@@ -2,6 +2,7 @@
 .headContainer {
   display: flex;
   padding: 1rem;
+  cursor: auto !important;
   div {
     display: flex;
     justify-content: flex-start;
@@ -42,5 +43,21 @@
       font-size: $fontSize;
       color: gray;
     }
+  }
+}
+.switchContainer {
+  display: flex;
+  padding: 1rem;
+  margin: 1rem 0;
+  column-gap: 5px;
+  div {
+    color: $accentedColor;
+    padding: 1rem 2rem;
+    border-radius: 40px;
+  }
+  div:hover,
+  .active {
+    background-color: $accentedColor;
+    color: white;
   }
 }
