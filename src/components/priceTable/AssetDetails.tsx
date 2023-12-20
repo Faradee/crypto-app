@@ -7,7 +7,6 @@ import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
 import IntervalSwitch from "./IntervalSwitch";
 import FavoriteButton from "./FavoriteButton";
-//TODO:MOVE FAVORITE HERE
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
   const formattedDate = currentDate

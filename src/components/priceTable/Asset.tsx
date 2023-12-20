@@ -5,8 +5,7 @@ import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
 import AssetDetails from "./AssetDetails";
 import localeStringPrice from "./localeStringPrice";
-//TODO: ADD DETAILS WITH GRAPHS AND TRANSACTION CREATION
-//TODO: PUT FAVORITE QUERYING TO IT'S PARENT FOR ALL FAVORITE DATA
+//TODO: ADD TRANSACTION CREATION
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);

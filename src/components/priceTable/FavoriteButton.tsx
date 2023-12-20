@@ -27,7 +27,11 @@ const FavoriteButton = ({ id }: { id: string }) => {
   }, [id]);
   return (
     <div onClick={handleFavorite} title="Добавить в избранное" className={styles.favoriteButton}>
-      {favorited ? <GoStarFill size="20" /> : <GoStar color={!authorized ? "gray" : "white"} size="20" />}
+      {favorited ? (
+        <GoStarFill color="yellow" size="20" />
+      ) : (
+        <GoStar color={!authorized ? "gray" : "white"} size="20" />
+      )}
     </div>
   );
 };
