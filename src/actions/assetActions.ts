@@ -18,6 +18,15 @@ type History = {
   time: number;
   date: string;
 };
+export const getAssetData = async (cryptoId: string) => {
+  const headers = new Headers({
+    Authorization: `Bearer ${process.env.COINCAP_KEY}`,
+  });
+  const url = `https://api.coincap.io/v2/assets/${cryptoId}`;
+  const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
+  const { data } = await res.json();
+  return data;
+};
 //По дефолту фетчится первые 20 криптовалют отсортированных по капитализации
 export const fetchAssets = async (offset: number | string = 0, limit: number | string = 20) => {
   const headers = new Headers({
