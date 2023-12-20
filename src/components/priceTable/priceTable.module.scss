@@ -5,6 +5,7 @@
   text-align: center;
   border-collapse: collapse;
   margin-bottom: 1rem;
+  width: 100%;
   img {
     display: block;
     margin: 0 auto;
@@ -59,7 +60,7 @@
 }
 .tableContainer {
   margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  @include lgScreen {
+    width: 60%;
+  }
 }

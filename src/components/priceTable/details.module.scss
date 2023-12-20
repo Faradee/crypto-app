@@ -1,22 +1,35 @@
 @use "variables.scss" as *;
+@use "mixins.scss" as *;
 .headContainer {
   display: flex;
   padding: 1rem;
   cursor: auto !important;
+  width: 100%;
+  @include mdScreen {
+    flex-direction: column;
+  }
   div {
     display: flex;
     justify-content: flex-start;
   }
   .title {
-    width: 50%;
+    @include lgScreen {
+      width: 50%;
+    }
+    width: auto;
+    height: 100%;
+    margin-bottom: 1rem;
   }
   .column {
-    margin-left: 0.5rem;
     row-gap: 10px;
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: space-between !important;
+    margin-right: 1rem;
+    span {
+      text-align: start;
+    }
     .name {
       font-size: $lgFontSize;
       font-weight: bold;
@@ -27,11 +40,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @include mdScreen {
+    flex-direction: column;
+  }
   cursor: auto !important;
   & > div {
-    width: 50%;
+    @include lgScreen {
+      width: 50%;
+    }
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
   }
 }
 .detailsTr:hover {
@@ -47,7 +65,10 @@
   color: white !important;
 }
 .details {
-  width: 50%;
+  @include lgScreen {
+    width: 50%;
+  }
+
   .column {
     span {
       font-weight: bolder;
@@ -58,12 +79,13 @@
 }
 .switchContainer {
   display: flex;
+  justify-content: center;
   padding: 0.5rem;
   margin: 0.5rem 0;
   column-gap: 5px;
   div {
     color: $accentedColor;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     border-radius: 40px;
     cursor: pointer;
   }
@@ -74,7 +96,10 @@
   }
 }
 .buttonContainer {
-  width: 50%;
+  @include lgScreen {
+    width: 50%;
+  }
+  width: 100%;
   margin: 0 auto;
 }
 .favoriteButton {

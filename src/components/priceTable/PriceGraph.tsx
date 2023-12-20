@@ -1,5 +1,6 @@
 import { memo } from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+import styles from "./graph.module.scss";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -77,6 +78,8 @@ const PriceGraph = ({
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         intersect: false,
@@ -88,34 +91,36 @@ const PriceGraph = ({
     },
   };
   return (
-    <Line
-      data={{
-        labels: history.map((point, index) => {
-          const { date } = point;
-          return date.toLocaleString("ru", {
-            hour12: false,
-            day: "numeric",
-            month: "long",
-            hour: "numeric",
-            minute: "numeric",
-          });
-        }),
-        datasets: [
-          {
-            label: "",
-            data: history.map((point, index) => {
-              return point.priceUsd;
-            }),
-            fill: true,
-            borderColor: color === "green" ? "rgba(0,255,0,1)" : "rgba(255,0,0,1)",
-            pointBorderWidth: 1,
-            pointRadius: 0,
-            backgroundColor: color === "green" ? "rgba(0,255,0,0.2)" : "rgba(255,0,0,0.2)",
-          },
-        ],
-      }}
-      options={options}
-    />
+    <div className={styles.graphContainer}>
+      <Line
+        data={{
+          labels: history.map((point, index) => {
+            const { date } = point;
+            return date.toLocaleString("ru", {
+              hour12: false,
+              day: "numeric",
+              month: "long",
+              hour: "numeric",
+              minute: "numeric",
+            });
+          }),
+          datasets: [
+            {
+              label: "",
+              data: history.map((point, index) => {
+                return point.priceUsd;
+              }),
+              fill: true,
+              borderColor: color === "green" ? "rgba(0,255,0,1)" : "rgba(255,0,0,1)",
+              pointBorderWidth: 2,
+              pointRadius: 0,
+              backgroundColor: color === "green" ? "rgba(0,255,0,0.2)" : "rgba(255,0,0,0.2)",
+            },
+          ],
+        }}
+        options={options}
+      />
+    </div>
   );
 };
 

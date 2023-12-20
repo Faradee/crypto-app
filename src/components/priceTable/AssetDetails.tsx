@@ -34,7 +34,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   }, [crypto.id, range]);
   return (
     <tr className={styles.detailsTr}>
-      <td colSpan={6}>
+      <td colSpan={6} className={styles.detailsTd}>
         <div className={styles.headContainer}>
           <div className={styles.title}>
             <div className={styles.logo}>
@@ -48,16 +48,11 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           <MarketData marketData={history?.marketData} />
         </div>
         <div className={styles.options}>
-          <div>
-            <IntervalSwitch range={range} setRange={setRange} />
-          </div>
-          <div>
-            <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
-              <Button title="Перейти к транзакциям" />
-            </Link>
+          <IntervalSwitch range={range} setRange={setRange} />
 
-            <FavoriteButton id={crypto.id} />
-          </div>
+          <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
+            <Button title="Перейти к транзакциям" />
+          </Link>
         </div>
         {historyRef.current?.historyData && rangeRef.current && (
           <PriceGraph

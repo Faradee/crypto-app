@@ -1,0 +1,13 @@
+@use "mixins.scss" as *;
+.graphContainer {
+  position: relative;
+  margin: auto;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  canvas {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
