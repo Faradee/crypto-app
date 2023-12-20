@@ -6,7 +6,7 @@ import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
 import IntervalSwitch from "./IntervalSwitch";
-//TODO:INTERVAL SWITCH
+//TODO:MOVE FAVORITE HERE
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
   const formattedDate = currentDate
@@ -45,7 +45,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           <PriceGraph
             range={range}
             history={history.historyData}
-            color={history.marketData.change24h[0] === "-" ? "red" : "green"}
+            color={history.marketData.change[0] === "-" ? "red" : "green"}
           />
         )}
       </td>

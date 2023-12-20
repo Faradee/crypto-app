@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const MarketData = ({
   marketData,
 }: {
-  marketData?: { high: number; low: number; average: number; change24h: string };
+  marketData?: { high: number; low: number; average: number; change: string };
 }) => {
   if (marketData)
     return (
@@ -24,8 +24,8 @@ const MarketData = ({
           </span>
           <span>
             Изменение:{" "}
-            <span className={marketData.change24h[0] === "-" ? styles.decrease : styles.increase}>
-              {marketData.change24h}%
+            <span className={marketData.change[0] === "-" ? styles.decrease : styles.increase}>
+              {marketData.change}%
             </span>
           </span>
         </div>

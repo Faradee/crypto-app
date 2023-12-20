@@ -89,10 +89,8 @@ export const fetchAssetHistory = async (
     else if (price < low) low = price;
   });
   average = average / data.length;
-  const change24h = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(
-    3
-  );
-  return { historyData: formattedHistory, marketData: { low, high, average, change24h } };
+  const change = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(4);
+  return { historyData: formattedHistory, marketData: { low, high, average, change } };
 };
 export const getFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();
