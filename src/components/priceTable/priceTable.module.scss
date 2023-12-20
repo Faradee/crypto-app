@@ -2,7 +2,6 @@
 @use "mixins.scss" as *;
 .priceTable {
   @include boxShadow;
-  width: 60rem;
   text-align: center;
   border-collapse: collapse;
   margin-bottom: 1rem;
@@ -30,6 +29,21 @@
   tr:hover {
     background-color: rgba(17, 153, 250, 0.12);
   }
+
+  @include mdScreen {
+    tr > *:nth-child(5) {
+      display: none;
+    }
+  }
+
+  @include smScreen {
+    tr > *:nth-child(6) {
+      display: none;
+    }
+    tr > *:nth-child(5) {
+      display: none;
+    }
+  }
 }
 .flashGreen {
   background-color: rgba(60, 255, 60, 0.5);
@@ -45,4 +59,7 @@
 }
 .tableContainer {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

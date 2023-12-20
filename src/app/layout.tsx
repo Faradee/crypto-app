@@ -4,6 +4,7 @@ import "./globals.scss";
 import Navbar from "@/components/navbar/Navbar";
 import NextTopLoader from "nextjs-toploader";
 import AuthContextWrapper from "@/components/navbar/AuthContextWrapper";
+import styles from "./root.module.scss";
 import { fetchUser } from "@/actions/userActions";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AuthContextWrapper isLoggedIn={isLoggedIn}>
           <>
             <Navbar />
-            <div>{children}</div>
+            <main className={styles.main}>{children}</main>
           </>
         </AuthContextWrapper>
       </body>

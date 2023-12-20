@@ -1,9 +1,5 @@
 @use "variables.scss" as *;
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+@use "mixins.scss" as *;
 .loadingContainer {
   height: $subNavbarHeight;
   width: 100%;
@@ -17,5 +13,11 @@
   justify-content: center;
 }
 .main {
-  margin-top: 5px;
+  margin: 5px auto;
+  @include lgScreen {
+    width: 60rem;
+  }
+
+  display: flex;
+  justify-content: center;
 }

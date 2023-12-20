@@ -15,16 +15,19 @@ const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
   const handleAsync = async () => {
     if (async) setLoading(true);
     if (onClick) await onClick();
-    setLoading(false);
   };
   return (
     <button
       type={submit ? "submit" : "button"}
       title={title}
-      onClick={(e) => {
-        if (!submit) e.preventDefault();
-        if (!loading) handleAsync();
-      }}
+      onClick={
+        onClick
+          ? (e) => {
+              if (!submit) e.preventDefault();
+              if (!loading) handleAsync();
+            }
+          : () => {}
+      }
       className={className ? className : styles.button}
     >
       {loading ? <Spinner /> : title}
