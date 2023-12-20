@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, memo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -33,36 +34,34 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
     fetchData();
   }, [crypto.id, range]);
   return (
-    <tr className={styles.detailsTr}>
-      <td colSpan={6} className={styles.detailsTd}>
-        <div className={styles.headContainer}>
-          <div className={styles.title}>
-            <div className={styles.logo}>
-              <Image src={icon} alt={crypto.id} width={64} height={64} />
-            </div>
-            <div className={styles.column}>
-              <span className={styles.name}>{`${crypto.name} (${crypto.symbol.toUpperCase()})`}</span>
-              <span>{formattedDate}</span>
-            </div>
+    <>
+      <div className={styles.headContainer}>
+        <div className={styles.title}>
+          <div className={styles.logo}>
+            <Image src={icon} alt={crypto.id} width={64} height={64} />
           </div>
-          <MarketData marketData={history?.marketData} />
+          <div className={styles.column}>
+            <span className={styles.name}>{`${crypto.name} (${crypto.symbol.toUpperCase()})`}</span>
+            <span>{formattedDate}</span>
+          </div>
         </div>
-        <div className={styles.options}>
-          <IntervalSwitch range={range} setRange={setRange} />
+        <MarketData marketData={history?.marketData} />
+      </div>
+      <div className={styles.options}>
+        <IntervalSwitch range={range} setRange={setRange} />
 
-          <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
-            <Button title="Перейти к транзакциям" />
-          </Link>
-        </div>
-        {historyRef.current?.historyData && rangeRef.current && (
-          <PriceGraph
-            range={rangeRef.current}
-            history={historyRef.current.historyData}
-            color={historyRef.current.marketData.change[0] === "-" ? "red" : "green"}
-          />
-        )}
-      </td>
-    </tr>
+        <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
+          <Button title="Перейти к транзакциям" />
+        </Link>
+      </div>
+      {historyRef.current?.historyData && rangeRef.current && (
+        <PriceGraph
+          range={rangeRef.current}
+          history={historyRef.current.historyData}
+          color={historyRef.current.marketData.change[0] === "-" ? "red" : "green"}
+        />
+      )}
+    </>
   );
 };
 

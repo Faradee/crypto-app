@@ -25,7 +25,15 @@ export const getAssetData = async (cryptoId: string) => {
   const url = `https://api.coincap.io/v2/assets/${cryptoId}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data } = await res.json();
-  return data;
+  return {
+    id: data.id,
+    rank: data.rank,
+    marketCap: data.marketCapUsd,
+    symbol: data.symbol,
+    name: data.name,
+    priceUsd: parseFloat(data.priceUsd),
+    changePercent24Hr: parseFloat(data.changePercent24Hr),
+  };
 };
 //По дефолту фетчится первые 20 криптовалют отсортированных по капитализации
 export const fetchAssets = async (offset: number | string = 0, limit: number | string = 20) => {

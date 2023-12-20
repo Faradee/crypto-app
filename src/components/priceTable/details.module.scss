@@ -52,9 +52,7 @@
     display: flex;
   }
 }
-.detailsTr:hover {
-  background-color: $primaryColor !important;
-}
+
 .increase {
   color: rgb(0, 255, 0) !important;
 }
@@ -68,7 +66,6 @@
   @include lgScreen {
     width: 50%;
   }
-
   .column {
     span {
       font-weight: bolder;

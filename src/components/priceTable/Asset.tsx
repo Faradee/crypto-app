@@ -42,7 +42,13 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
           {crypto.changePercent24Hr.toFixed(2)}%
         </td>
       </tr>
-      {active && <AssetDetails crypto={crypto} icon={getIconUrl(crypto.symbol)} />}
+      {active && (
+        <tr className={styles.detailsTr}>
+          <td colSpan={6} className={styles.detailsTd}>
+            <AssetDetails crypto={crypto} icon={getIconUrl(crypto.symbol)} />{" "}
+          </td>
+        </tr>
+      )}
     </>
   );
 };

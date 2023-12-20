@@ -60,7 +60,8 @@
 }
 .tableContainer {
   margin-bottom: 1rem;
-  @include lgScreen {
-    width: 60%;
-  }
+  width: 100%;
+}
+.detailsTr:hover {
+  background-color: $primaryColor !important;
 }
