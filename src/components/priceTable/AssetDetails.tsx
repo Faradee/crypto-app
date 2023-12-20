@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useRef } from "react";
 import Image from "next/image";
 import styles from "./details.module.scss";
 import MarketData from "./MarketData";
@@ -18,10 +18,15 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
     .slice(0, -3);
   const [range, setRange] = useState<"day" | "week" | "month" | "half-year" | "year">("day");
   const [history, setHistory] = useState<Awaited<ReturnType<typeof fetchAssetHistory>>>();
+  const historyRef = useRef<typeof history>();
+  const rangeRef = useRef<typeof range>();
   useEffect(() => {
     const fetchData = async () => {
+      setHistory(undefined);
       const history = await fetchAssetHistory(crypto.id, range);
       setHistory(history);
+      historyRef.current = history;
+      rangeRef.current = range;
     };
     fetchData();
   }, [crypto.id, range]);
@@ -41,14 +46,18 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           <MarketData marketData={history?.marketData} />
         </div>
         <div className={styles.options}>
-          <IntervalSwitch range={range} setRange={setRange} />
-          <FavoriteButton id={crypto.id} />
+          <div>
+            <IntervalSwitch range={range} setRange={setRange} />
+          </div>
+          <div>
+            <FavoriteButton id={crypto.id} />
+          </div>
         </div>
-        {history?.historyData && (
+        {historyRef.current?.historyData && rangeRef.current && (
           <PriceGraph
-            range={range}
-            history={history.historyData}
-            color={history.marketData.change[0] === "-" ? "red" : "green"}
+            range={rangeRef.current}
+            history={historyRef.current.historyData}
+            color={historyRef.current.marketData.change[0] === "-" ? "red" : "green"}
           />
         )}
       </td>

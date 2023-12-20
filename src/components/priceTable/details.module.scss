@@ -27,8 +27,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
   cursor: auto !important;
+  div {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 .detailsTr:hover {
   background-color: $primaryColor !important;
@@ -54,8 +58,8 @@
 }
 .switchContainer {
   display: flex;
-  padding: 1rem;
-  margin: 1rem 0;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
   column-gap: 5px;
   div {
     color: $accentedColor;
