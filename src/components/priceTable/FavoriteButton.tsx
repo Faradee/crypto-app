@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useContext } from "react";
 import { GoStarFill, GoStar } from "react-icons/go";
-import styles from "./priceTable.module.scss";
+import styles from "./details.module.scss";
 import { getFavorite, setFavorite, unsetFavorite } from "@/actions/assetActions";
 import AuthContext from "../navbar/AuthContext";
 const FavoriteButton = ({ id }: { id: string }) => {

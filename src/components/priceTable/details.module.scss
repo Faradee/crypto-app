@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: space-between;
   cursor: auto !important;
-  div {
+  & > div {
     width: 50%;
     display: flex;
     justify-content: flex-end;
@@ -72,4 +72,17 @@
     background-color: $accentedColor;
     color: white;
   }
+}
+.buttonContainer {
+  width: 50%;
+  margin: 0 auto;
+}
+.favoriteButton {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+  width: 20px;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
 }
