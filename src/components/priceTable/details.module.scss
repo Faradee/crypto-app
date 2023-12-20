@@ -23,6 +23,13 @@
     }
   }
 }
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  cursor: auto !important;
+}
 .detailsTr:hover {
   background-color: $primaryColor !important;
 }
@@ -54,6 +61,7 @@
     color: $accentedColor;
     padding: 1rem 2rem;
     border-radius: 40px;
+    cursor: pointer;
   }
   div:hover,
   .active {

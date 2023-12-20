@@ -6,6 +6,7 @@ import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
 import IntervalSwitch from "./IntervalSwitch";
+import FavoriteButton from "./FavoriteButton";
 //TODO:MOVE FAVORITE HERE
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
@@ -27,7 +28,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   }, [crypto.id, range]);
   return (
     <tr className={styles.detailsTr}>
-      <td colSpan={7}>
+      <td colSpan={6}>
         <div className={styles.headContainer}>
           <div className={styles.title}>
             <div className={styles.logo}>
@@ -40,7 +41,10 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
           </div>
           <MarketData marketData={history?.marketData} />
         </div>
-        <IntervalSwitch range={range} setRange={setRange} />
+        <div className={styles.options}>
+          <IntervalSwitch range={range} setRange={setRange} />
+          <FavoriteButton id={crypto.id} />
+        </div>
         {history?.historyData && (
           <PriceGraph
             range={range}

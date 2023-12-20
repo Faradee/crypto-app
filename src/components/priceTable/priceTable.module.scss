@@ -49,5 +49,9 @@
 .favoriteButton {
   display: flex;
   justify-content: center;
+  height: fit-content;
+  width: fit-content;
   align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
 }

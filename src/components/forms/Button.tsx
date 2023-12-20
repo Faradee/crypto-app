@@ -22,7 +22,7 @@ const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
       type={submit ? "submit" : "button"}
       title={title}
       onClick={(e) => {
-        e.preventDefault();
+        if (!submit) e.preventDefault();
         if (!loading) handleAsync();
       }}
       className={className ? className : styles.button}

@@ -67,7 +67,6 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
       <table className={styles.priceTable}>
         <thead>
           <tr>
-            <th></th>
             <th>#</th>
             <th></th>
             <th>Имя</th>

@@ -120,12 +120,20 @@ export const getFavorites = async () => {
 export const setFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();
   if (uuid) {
-    const created = await prisma.favorite.create({
-      data: {
-        cryptoId,
+    const found = await prisma.favorite.findFirst({
+      where: {
         userId: uuid,
+        cryptoId,
       },
     });
+    const created =
+      !found &&
+      (await prisma.favorite.create({
+        data: {
+          cryptoId,
+          userId: uuid,
+        },
+      }));
     if (created) return true;
   }
   return false;
@@ -134,14 +142,22 @@ export const setFavorite = async (cryptoId: string) => {
 export const unsetFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();
   if (uuid) {
-    const deleted = await prisma.favorite.delete({
+    const found = await prisma.favorite.findFirst({
       where: {
-        cryptoId_userId: {
-          userId: uuid,
-          cryptoId,
-        },
+        userId: uuid,
+        cryptoId,
       },
     });
+    const deleted =
+      found &&
+      (await prisma.favorite.delete({
+        where: {
+          cryptoId_userId: {
+            userId: uuid,
+            cryptoId,
+          },
+        },
+      }));
     if (deleted) return true;
   }
   return false;

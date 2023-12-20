@@ -30,9 +30,6 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
   return (
     <>
       <tr ref={rowRef} onClick={onClick}>
-        <td>
-          <FavoriteButton id={crypto.id} />
-        </td>
         <td>{crypto.rank}</td>
         <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
         <td>{crypto.name}</td>
