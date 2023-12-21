@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GoArrowSwitch } from "react-icons/go";
 import FormField from "../forms/FormField";
 import Image from "next/image";
@@ -13,19 +13,24 @@ type Transaction = {
 };
 const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
   const [isBuy, setIsBuy] = useState<boolean>(true);
-  const [transaction, setTransaction] = useState<Transaction>({
-    cryptoId: crypto.id,
-    coin: "",
-    cash: "",
-  });
-  const setTransactionProp: React.Dispatch<React.SetStateAction<any>> = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTransaction({ ...transaction, [e.currentTarget.name]: e.currentTarget.value });
-  };
-  const handleChange = (
-    e: React.ChangeEvent | React.MouseEvent,
-    setTransactionProp: React.Dispatch<React.SetStateAction<any>>
+  const [cash, setCash] = useState<string>("");
+  const [coin, setCoin] = useState<string>("");
+  const currentPrice = crypto.priceUsd;
+  const handleCashChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    setTransactionProp(e);
+    setState(e.currentTarget.value);
+    if (e.currentTarget.value !== "") setCoin((parseFloat(e.currentTarget.value) / currentPrice).toString());
+    else setCoin("");
+  };
+  const handleCoinChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setState(e.currentTarget.value);
+    if (e.currentTarget.value !== "") setCash((parseFloat(e.currentTarget.value) * currentPrice).toString());
+    else setCash("");
   };
   return (
     <div className={styles.transaction}>
@@ -33,13 +38,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
       <div className={styles.formContainer}>
         <label>{isBuy ? "Вы покупаете:" : "Вы продаете:"}</label>
         <div className={styles.formField}>
-          <FormField
-            type="number"
-            name="coin"
-            placeholder="0"
-            onChange={handleChange}
-            useState={[transaction.coin, setTransactionProp]}
-          >
+          <FormField type="number" name="coin" placeholder="0" onChange={handleCoinChange} useState={[coin, setCoin]}>
             <div className={styles.currency}>
               <Image src={getIconUrl(crypto.symbol)} width={30} height={30} alt={crypto.name} />
               {crypto.symbol}
@@ -48,19 +47,13 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
         </div>
       </div>
       <div className={styles.switch} onClick={() => setIsBuy(!isBuy)}>
-        <GoArrowSwitch size={32} color={isBuy ? "lime" : "red"} />
+        <GoArrowSwitch size={32} color="lime" />
       </div>
 
       <div className={styles.formContainer}>
         <label>За:</label>
         <div className={styles.formField}>
-          <FormField
-            type="number"
-            name="cash"
-            placeholder="0"
-            onChange={handleChange}
-            useState={[transaction.cash, setTransactionProp]}
-          >
+          <FormField type="number" name="cash" placeholder="0" onChange={handleCashChange} useState={[cash, setCash]}>
             <div className={styles.currency}>$USD</div>
           </FormField>
         </div>

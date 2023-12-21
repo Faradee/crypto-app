@@ -8,7 +8,7 @@ export type FormFieldProps = {
   name: string;
   placeholder?: string;
   rows?: number;
-  onChange?: (e: React.ChangeEvent | React.MouseEvent, setState: React.Dispatch<React.SetStateAction<string>>) => void;
+  onChange?: (e: React.ChangeEvent<any>, setState: React.Dispatch<React.SetStateAction<string>>) => void;
   children?: React.ReactNode;
   noMargin?: boolean;
   required?: boolean;
@@ -93,7 +93,6 @@ const FormField = (props: FormFieldProps) => {
           readOnly={readOnly}
           onChange={(e) => {
             if (/^$|^[0-9]*\.?[0-9]*?$/.test(e.currentTarget.value)) {
-              console.log(e.currentTarget.value);
               onChange ? onChange(e, setState) : setState(e.currentTarget.value);
             }
           }}
