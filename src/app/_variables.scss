@@ -1,7 +1,7 @@
-$primaryColor: #12192b;
-$secondaryColor: #0b1426;
+$primaryColor: rgb(54, 54, 54);
+$secondaryColor: black;
 $accentedColor: lighten(
-  $color: $primaryColor,
+  $color: blue,
   $amount: 25,
 );
 $navbarHeight: 5rem;

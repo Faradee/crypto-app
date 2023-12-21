@@ -31,6 +31,8 @@
   overflow: hidden;
 }
 @mixin boxShadow {
-  box-shadow: (0, 0, 0, 0.4) 0px 2px 15px -3px;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   border: medium;
 }
