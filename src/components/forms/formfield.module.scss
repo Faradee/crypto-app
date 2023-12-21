@@ -27,7 +27,7 @@
   }
 }
 .label:focus-within {
-  outline: skyblue 2px solid;
+  outline: $accentedColor 2px solid;
 }
 .hidden {
   visibility: hidden;

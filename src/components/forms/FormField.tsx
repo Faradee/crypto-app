@@ -19,8 +19,8 @@ export type FormFieldProps = {
 const FormField = (props: FormFieldProps) => {
   const [state, setState] = props.useState;
   const { type, icon, placeholder, rows, onChange, children, name, required, noMargin, className, readOnly } = props;
-  const Icon = icon;
-  //Решает нерабочее поведение input number в браузерах Firefox
+
+  const Icon = icon; //Решает нерабочее поведение input number в браузерах Firefox
   const preventFirefoxNumberInput = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (
       navigator.userAgent.includes("Firefox") &&
@@ -30,9 +30,12 @@ const FormField = (props: FormFieldProps) => {
       e.preventDefault();
     }
   };
+
+  const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
   return (
     <label
-      className={styles.label}
+      className={!className ? styles.label : className}
       style={
         !className && type === "boolean"
           ? {
@@ -86,14 +89,14 @@ const FormField = (props: FormFieldProps) => {
           value={state as string}
           name={name}
           placeholder={placeholder}
-          type={type}
+          type={"text"}
           readOnly={readOnly}
           onChange={(e) => {
-            if (/^[1-9][0-9]*$/.test(e.currentTarget.value) || e.currentTarget.value === "") {
+            if (/^$|^[0-9]*\.?[0-9]*?$/.test(e.currentTarget.value)) {
+              console.log(e.currentTarget.value);
               onChange ? onChange(e, setState) : setState(e.currentTarget.value);
             }
           }}
-          onKeyDown={type === "number" ? (e) => preventFirefoxNumberInput(e) : undefined}
           required={required}
         />
       ) : (

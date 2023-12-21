@@ -5,15 +5,11 @@ import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
 import AssetDetails from "./AssetDetails";
 import localeStringPrice from "./localeStringPrice";
+import { getIconUrl } from "./getIconUrl";
 //TODO: ADD TRANSACTION CREATION
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);
-  const getIconUrl = (symbol: string) => {
-    //API возвращает IOTA а иконка хранится с идентификатором MIOTA
-    if (symbol.toLowerCase() === "iota") symbol = "miota";
-    return `https://assets.coincap.io/assets/icons/${symbol.toLowerCase()}@2x.png`;
-  };
   useEffect(() => {
     if (rowRef.current && priceRef.current) {
       rowRef.current.className = "";

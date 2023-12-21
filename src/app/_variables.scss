@@ -1,5 +1,6 @@
 $primaryColor: rgb(54, 54, 54);
-$secondaryColor: black;
+$secondaryColor: rgb(40, 40, 40);
+$borderColor: rgb(27, 27, 27);
 $accentedColor: lighten(
   $color: blue,
   $amount: 25,
@@ -11,5 +12,6 @@ $lgFontSize: 32px;
 $xlFontSize: 48px;
 $inputBackground: #d2d2d2;
 $textColor: #000;
+$secondaryTextColor: rgba(255, 255, 255, 0.54);
 $roundedRadius: 15px;
 $subNavbarHeight: calc(100vh - $navbarHeight - 5px);

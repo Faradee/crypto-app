@@ -1,4 +1,11 @@
 .container {
   display: flex;
   width: 100%;
+  .detailsContainer {
+    width: 100%;
+  }
+  .transactionContainer {
+    display: flex;
+    align-items: center;
+  }
 }
