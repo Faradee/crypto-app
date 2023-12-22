@@ -53,7 +53,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
         <IntervalSwitch range={range} setRange={setRange} />
         {pathname === "/" ? (
           <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
-            <Button title="Перейти к транзакциям" />
+            <Button title="Создать транзакцию" />
           </Link>
         ) : (
           <div className={styles.price}>
