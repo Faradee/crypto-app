@@ -29,12 +29,14 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
     setCoin("");
   };
   const handleSubmit = async () => {
-    const created = await createTransaction({
-      cryptoId: crypto.id,
-      cash,
-      coin,
-    });
-    if (created) resetState();
+    if (cash && coin) {
+      const created = await createTransaction({
+        cryptoId: crypto.id,
+        cash,
+        coin,
+      });
+      if (created) resetState();
+    }
   };
   const handleCoinChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -59,10 +61,12 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
             </FormField>
           </div>
         </div>
-        <div className={styles.switch} onClick={() => setIsBuy(!isBuy)}>
-          <GoArrowSwitch size={32} color="lime" />
+        <div className={styles.dividerContainer}>
+          <div className={styles.switch} onClick={() => setIsBuy(!isBuy)}>
+            <GoArrowSwitch size={32} color="lime" />
+          </div>
+          <span>{`1 ${crypto.symbol} = $${crypto.priceUsd}`}</span>
         </div>
-
         <div className={styles.formContainer}>
           <label>За:</label>
           <div className={styles.formField}>
