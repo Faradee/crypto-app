@@ -2,18 +2,35 @@
 import prisma from "../../db";
 import { verifyToken } from "./userActions";
 export type Transaction = {
-  cryptoId: string;
+  cryptoName: string;
   coin: string;
   cash: string;
 };
+export const getUserTransactionCoins = async () => {
+  const uuid = await verifyToken();
+  if (uuid) {
+    const found = await prisma.transaction.findMany({
+      where: {
+        userId: uuid,
+      },
+      select: {
+        cryptoName: true,
+      },
+    });
+    const nameList = found.map((coin) => {
+      return coin.cryptoName;
+    });
+    return nameList;
+  }
+};
 export const createTransaction = async (transaction: Transaction) => {
-  const { cryptoId, coin, cash } = transaction;
+  const { cryptoName, coin, cash } = transaction;
   const uuid = await verifyToken();
   if (uuid) {
     const created = await prisma.transaction.create({
       data: {
         cash: parseFloat(cash),
-        cryptoId,
+        cryptoName,
         amount: parseFloat(coin),
         userId: uuid,
       },
