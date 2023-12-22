@@ -3,7 +3,6 @@ import { useCallback, useState, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useSearchParams, useRouter } from "next/navigation";
 import { AiOutlineClose } from "react-icons/ai";
-import { useClickOutside } from "../containers/DropDownContainer";
 import { FaArrowLeft } from "react-icons/fa6";
 //TODO: FIX HIDING
 const Searchbar = () => {
@@ -22,9 +21,8 @@ const Searchbar = () => {
         router.replace("/?" + params.toString());
       }
     },
-    [searchParams, query, router],
+    [searchParams, query, router]
   );
-  useClickOutside(formRef, () => setIsActive(false));
   return (
     <>
       <button

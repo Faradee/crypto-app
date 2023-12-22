@@ -5,15 +5,12 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
   Title,
   Tooltip,
   Legend,
-  plugins,
   PointElement,
   LineElement,
   Filler,
-  ChartOptions,
   Tick,
 } from "chart.js";
 import localeStringPrice from "./localeStringPrice";

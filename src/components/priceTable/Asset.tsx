@@ -1,12 +1,12 @@
 import React, { useEffect, memo, useRef } from "react";
-import FavoriteButton from "./FavoriteButton";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
-import AssetDetails from "./AssetDetails";
 import localeStringPrice from "./localeStringPrice";
 import { getIconUrl } from "./getIconUrl";
 //TODO: ADD TRANSACTION CREATION
+const AssetDetails = dynamic(() => import("./AssetDetails"));
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);
