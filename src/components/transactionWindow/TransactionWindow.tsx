@@ -13,12 +13,14 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
   const [isBuy, setIsBuy] = useState<boolean>(true);
   const [cash, setCash] = useState<string>("");
   const [coin, setCoin] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const { authorized } = useContext(AuthContext);
   const currentPrice = crypto.priceUsd;
   const handleCashChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
+    setMessage("");
     setState(e.currentTarget.value);
     if (e.currentTarget.value !== "") setCoin((parseFloat(e.currentTarget.value) / currentPrice).toString());
     else setCoin("");
@@ -35,19 +37,24 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
         cash,
         coin,
       });
-      if (created) resetState();
+      if (created) {
+        setMessage("Транзакция успешно создана");
+        resetState();
+      } else setMessage("Ошибка при создании транзакции");
     }
   };
   const handleCoinChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
+    setMessage("");
     setState(e.currentTarget.value);
     if (e.currentTarget.value !== "") setCash((parseFloat(e.currentTarget.value) * currentPrice).toString());
     else setCash("");
   };
   return (
     <div className={styles.transactionContainer}>
+      <span>{message}</span>
       <div className={styles.transaction}>
         <label>Добавить транзакцию</label>
         <div className={styles.formContainer}>
