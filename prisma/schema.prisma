@@ -17,14 +17,13 @@ model Favorite {
 }
 
 model Transaction {
+  id        String   @id @default(uuid())
   cryptoId  String
   cash      Float
   createdAt DateTime @default(now())
   amount    Float
   userId    String
   user      User     @relation(fields: [userId], references: [uuid], onDelete: Cascade)
-
-  @@id([cryptoId, userId])
 }
 
 model User {
