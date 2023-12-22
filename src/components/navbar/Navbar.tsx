@@ -8,20 +8,11 @@ import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
 import AuthContext from "./AuthContext";
 import { signUserOut } from "@/actions/userActions";
-type Button = {
-  title: string;
-  url: string;
-  icon?: IconType;
-};
+import { RiBitCoinFill } from "react-icons/ri";
 //todo: add watched cryptos and dashboard
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const { authorized, setAuthorized } = useContext(AuthContext);
-
-  const buttons = [
-    { title: "Избранное", url: "?favorites=user" },
-    { title: "Мои объявления", url: "?posts=user" },
-  ] as Button[];
   const handleSignOut = () => {
     signUserOut();
     setAuthorized(false);
@@ -44,13 +35,14 @@ const Navbar = () => {
           </Link>
         </div>
         <ul className={styles.optionList}>
-          {buttons.map((button) => {
-            return (
-              <li key={button.url}>
-                <Link href={`/${button.url.toLowerCase()}`}>{button.title}</Link>
-              </li>
-            );
-          })}
+          <li>
+            <Link href="/transactions">
+              <div>
+                <RiBitCoinFill size={20} />
+              </div>
+              Мои транзакции
+            </Link>
+          </li>
           <li>
             {!authorized ? (
               <button className={styles.auth} onClick={() => setIsAuth(true)}>

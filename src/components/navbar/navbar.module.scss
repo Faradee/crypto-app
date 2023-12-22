@@ -20,6 +20,15 @@
     align-items: center;
     gap: 10px;
     margin-right: 10rem;
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      div {
+        width: 100%;
+        text-align: center;
+      }
+    }
     li {
       & > * {
         padding: 10px;

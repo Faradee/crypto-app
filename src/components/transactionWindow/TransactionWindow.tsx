@@ -77,7 +77,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
         </div>
       </div>
       <Button
-        title={!authorized ? "Авторизируйтесь, чтобы создать транзакцию" : isBuy ? "Продать" : "Купить"}
+        title={!authorized ? "Авторизируйтесь, чтобы создать транзакцию" : isBuy ? "Купить" : "Продать"}
         onClick={authorized ? handleSubmit : () => {}}
         disabled={!authorized}
         async
