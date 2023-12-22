@@ -6,10 +6,11 @@ import styles from "./details.module.scss";
 import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
-import PriceGraph from "./PriceGraph";
 import IntervalSwitch from "./IntervalSwitch";
 import Button from "../forms/Button";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+const PriceGraph = dynamic(() => import("./PriceGraph"));
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
   const pathname = usePathname();
