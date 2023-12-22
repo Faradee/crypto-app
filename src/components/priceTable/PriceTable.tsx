@@ -92,7 +92,9 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
             })}
         </tbody>
       </table>
-      <Button title="Загрузить еще" onClick={handlePagination} async />
+      <div className={styles.loadButton}>
+        <Button title="Загрузить еще" onClick={handlePagination} async />
+      </div>
     </div>
   );
 };

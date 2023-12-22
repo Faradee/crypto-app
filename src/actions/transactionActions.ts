@@ -9,7 +9,6 @@ export type Transaction = {
 export const createTransaction = async (transaction: Transaction) => {
   const { cryptoId, coin, cash } = transaction;
   const uuid = await verifyToken();
-  console.log("bye");
   if (uuid) {
     const created = await prisma.transaction.create({
       data: {

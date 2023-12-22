@@ -46,6 +46,13 @@
     }
   }
 }
+.loadButton {
+  display: flex;
+  justify-content: center;
+  button {
+    width: 50%;
+  }
+}
 .flashGreen {
   background-color: rgba(60, 255, 60, 0.5);
 }
