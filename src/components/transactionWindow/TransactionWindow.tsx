@@ -23,6 +23,19 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
     if (e.currentTarget.value !== "") setCoin((parseFloat(e.currentTarget.value) / currentPrice).toString());
     else setCoin("");
   };
+  const resetState = () => {
+    setIsBuy(true);
+    setCash("");
+    setCoin("");
+  };
+  const handleSubmit = async () => {
+    const created = await createTransaction({
+      cryptoId: crypto.id,
+      cash,
+      coin,
+    });
+    if (created) resetState();
+  };
   const handleCoinChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -61,17 +74,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
       </div>
       <Button
         title={!authorized ? "Авторизируйтесь, чтобы создать транзакцию" : isBuy ? "Продать" : "Купить"}
-        onClick={
-          authorized
-            ? async () => {
-                await createTransaction({
-                  cryptoId: crypto.id,
-                  cash,
-                  coin,
-                });
-              }
-            : () => {}
-        }
+        onClick={authorized ? handleSubmit : () => {}}
         disabled={!authorized}
         async
       />

@@ -8,10 +8,11 @@ import { Crypto } from "@/actions/assetActions";
 import { fetchAssetHistory } from "@/actions/assetActions";
 import PriceGraph from "./PriceGraph";
 import IntervalSwitch from "./IntervalSwitch";
-import FavoriteButton from "./FavoriteButton";
 import Button from "../forms/Button";
+import { usePathname } from "next/navigation";
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
   const currentDate = new Date();
+  const pathname = usePathname();
   const formattedDate = currentDate
     .toLocaleString("ru", {
       day: "numeric",
@@ -49,10 +50,11 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
       </div>
       <div className={styles.options}>
         <IntervalSwitch range={range} setRange={setRange} />
-
-        <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
-          <Button title="Перейти к транзакциям" />
-        </Link>
+        {pathname === "/" && (
+          <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
+            <Button title="Перейти к транзакциям" />
+          </Link>
+        )}
       </div>
       {historyRef.current?.historyData && rangeRef.current && (
         <PriceGraph
