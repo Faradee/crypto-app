@@ -9,6 +9,11 @@
   display: flex;
   justify-content: center;
 }
+.disabled {
+  background-color: gray !important;
+  color: white;
+  cursor: not-allowed;
+}
 .button:hover {
   background-color: lighten($color: $accentedColor, $amount: 3);
 }

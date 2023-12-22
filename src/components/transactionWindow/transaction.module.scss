@@ -1,56 +1,62 @@
 @use "variables.scss" as *;
 @use "mixins.scss" as *;
-.transaction {
-  @include boxShadow;
-  padding: 1rem;
+.transactionContainer {
   margin-left: 1rem;
-  span {
-    display: inline-block;
-    text-align: center;
-  }
-  .switch {
-    cursor: pointer;
-    width: fit-content;
-    padding: 10px;
-    border-radius: 9999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-  }
-  .switch:hover {
-    background-color: $secondaryColor;
-  }
-  .formContainer {
-    background-color: $secondaryColor;
-    padding: 5px;
-    border: 1px $borderColor solid;
-    border-radius: $roundedRadius;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .transaction {
+    @include boxShadow;
+    padding: 1rem;
 
-    .defaultText,
-    label {
-      color: $secondaryTextColor;
+    span {
+      display: inline-block;
+      text-align: center;
     }
-    * {
-      margin: 1rem 0;
-    }
-  }
-  .formField {
-    .currency {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    label,
-    input {
-      background-color: $secondaryColor !important;
-      outline: none;
-      font-size: $lgFontSize;
+    .switch {
+      cursor: pointer;
+      width: fit-content;
       padding: 10px;
-      color: whitesmoke;
+      border-radius: 9999px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
     }
-    input::placeholder {
-      color: $secondaryTextColor;
+    .switch:hover {
+      background-color: $secondaryColor;
+    }
+    .formContainer {
+      background-color: $secondaryColor;
+      padding: 5px;
+      border: 1px $borderColor solid;
+      border-radius: $roundedRadius;
+
+      .defaultText,
+      label {
+        color: $secondaryTextColor;
+      }
+      * {
+        margin: 1rem 0;
+      }
+    }
+    .formField {
+      .currency {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      label,
+      input {
+        background-color: $secondaryColor !important;
+        outline: none;
+        font-size: $lgFontSize;
+        padding: 10px;
+        color: whitesmoke;
+      }
+      input::placeholder {
+        color: $secondaryTextColor;
+      }
     }
   }
 }

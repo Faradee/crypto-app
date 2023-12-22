@@ -18,9 +18,9 @@ model Favorite {
 
 model Transaction {
   cryptoId  String
-  price     Int
+  cash      Float
   createdAt DateTime @default(now())
-  amount    Int
+  amount    Float
   userId    String
   user      User     @relation(fields: [userId], references: [uuid], onDelete: Cascade)
 

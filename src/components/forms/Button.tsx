@@ -9,12 +9,14 @@ type ButtonProps = {
   submit?: boolean;
   className?: string;
   async?: boolean;
+  disabled?: boolean;
 };
-const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
+const Button = ({ onClick, title, submit, className, async, disabled }: ButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const handleAsync = async () => {
     if (async) setLoading(true);
     if (onClick) await onClick();
+    setLoading(false);
   };
   return (
     <button
@@ -28,7 +30,8 @@ const Button = ({ onClick, title, submit, className, async }: ButtonProps) => {
             }
           : () => {}
       }
-      className={className ? className : styles.button}
+      disabled={disabled}
+      className={className ? className : `${styles.button} ${disabled ? styles.disabled : ""}`}
     >
       {loading ? <Spinner /> : title}
     </button>

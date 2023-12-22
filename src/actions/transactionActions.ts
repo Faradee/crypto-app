@@ -1,8 +1,25 @@
+"use server";
 import prisma from "../../db";
 import { verifyToken } from "./userActions";
-export const createTransaction = async () => {
+export type Transaction = {
+  cryptoId: string;
+  coin: string;
+  cash: string;
+};
+export const createTransaction = async (transaction: Transaction) => {
+  const { cryptoId, coin, cash } = transaction;
   const uuid = await verifyToken();
+  console.log("bye");
   if (uuid) {
-    const created = await prisma.transaction;
-  } else return false;
+    const created = await prisma.transaction.create({
+      data: {
+        cash: parseFloat(cash),
+        cryptoId,
+        amount: parseFloat(coin),
+        userId: uuid,
+      },
+    });
+    if (created) return true;
+  }
+  return false;
 };

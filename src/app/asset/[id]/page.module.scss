@@ -1,5 +1,12 @@
+@use "mixins.scss" as *;
+
 .container {
   display: flex;
+  justify-content: cent;
+  @include mdScreen {
+    flex-direction: column;
+    align-items: center;
+  }
   width: 100%;
   .detailsContainer {
     width: 100%;
