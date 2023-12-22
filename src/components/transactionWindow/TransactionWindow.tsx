@@ -53,7 +53,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
     else setCash("");
   };
   return (
-    <div className={styles.transactionContainer}>
+    <form className={styles.transactionContainer}>
       <span>{message}</span>
       <div className={styles.transaction}>
         <label>Добавить транзакцию</label>
@@ -72,7 +72,6 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
           <div className={styles.switch} onClick={() => setIsBuy(!isBuy)}>
             <GoArrowSwitch size={32} color="lime" />
           </div>
-          <span>{`1 ${crypto.symbol} = $${crypto.priceUsd}`}</span>
         </div>
         <div className={styles.formContainer}>
           <label>За:</label>
@@ -89,7 +88,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
         disabled={!authorized}
         async
       />
-    </div>
+    </form>
   );
 };
 export default TransactionWindow;

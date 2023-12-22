@@ -24,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="ru">
       <body className={inter.className}>
-        <NextTopLoader color="#f72d2d" showSpinner={false} />
+        <NextTopLoader color="#8080ff" showSpinner={false} />
         <AuthContextWrapper isLoggedIn={isLoggedIn}>
           <>
             <Navbar />

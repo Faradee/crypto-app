@@ -51,10 +51,14 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
       </div>
       <div className={styles.options}>
         <IntervalSwitch range={range} setRange={setRange} />
-        {pathname === "/" && (
+        {pathname === "/" ? (
           <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
             <Button title="Перейти к транзакциям" />
           </Link>
+        ) : (
+          <div className={styles.price}>
+            1 {crypto.symbol} = ${crypto.priceUsd}
+          </div>
         )}
       </div>
       {historyRef.current?.historyData && rangeRef.current && (

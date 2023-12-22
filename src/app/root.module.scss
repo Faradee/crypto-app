@@ -14,9 +14,6 @@
 }
 .main {
   margin: 5px auto;
-  @include lgScreen {
-    width: 60%;
-  }
   display: flex;
   justify-content: center;
 }
