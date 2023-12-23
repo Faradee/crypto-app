@@ -5,7 +5,7 @@ const Layout = async ({ children }: { children: JSX.Element }) => {
   const cryptoNames = await getUserTransactionCoins();
   return (
     <div className={styles.container}>
-      <DropdownList cryptoNames={cryptoNames} />
+      <h1>Данные о транзакциях</h1>
       {children}
     </div>
   );

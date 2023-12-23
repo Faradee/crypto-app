@@ -5,9 +5,12 @@
 }
 .container {
   @include container;
-  align-items: center;
+  h1 {
+    text-align: center;
+  }
 }
 .dashboard {
   display: grid;
   gap: 1rem;
+  margin: 1rem;
 }
