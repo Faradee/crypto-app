@@ -1,0 +1,43 @@
+@use "variables.scss" as *;
+.headerContainer {
+  display: flex;
+  .header,
+  button {
+    display: flex;
+    align-items: center;
+    border: 4px $borderColor solid;
+    background-color: $secondaryColor;
+
+    max-width: 55rem;
+    overflow: hidden;
+    li {
+      min-width: 10rem;
+      a {
+        text-align: center;
+        cursor: pointer;
+        padding: 0.5rem;
+        display: block;
+      }
+      a:hover {
+        background-color: $hoverSecondaryColor;
+        transition: background-color 100ms;
+      }
+    }
+    li:not(:last-child) {
+      border-right: 1px $borderColor solid;
+    }
+  }
+  button {
+    padding: 0.5rem;
+  }
+  button:first-child {
+    border-right: none;
+  }
+  button:last-child {
+    border-left: none;
+  }
+  button:hover {
+    background-color: $hoverSecondaryColor;
+    transition: background-color 100ms;
+  }
+}

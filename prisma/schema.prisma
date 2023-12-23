@@ -17,7 +17,7 @@ model Favorite {
 }
 
 model Transaction {
-  id         String   @id @default(uuid())
+  cryptoId   String   @id
   cryptoName String
   cash       Float
   createdAt  DateTime @default(now())
