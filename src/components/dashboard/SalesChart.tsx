@@ -13,12 +13,10 @@ import {
   Tick,
   ArcElement,
 } from "chart.js";
-
+import styles from "./graphs.module.scss";
 import { getSellTransactions } from "@/actions/transactionActions";
 import { useEffect, useState } from "react";
-import { Transaction } from "@prisma/client";
 import Slate from "../containers/Slate";
-import { getIconUrl } from "../priceTable/getIconUrl";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, ArcElement);
 const SalesChart = () => {
   const [sales, setSales] = useState<Awaited<ReturnType<typeof getSellTransactions>>>(false);
@@ -38,11 +36,10 @@ const SalesChart = () => {
     },
   };
   if (sales) {
-    console.log(sales);
     return (
       <Slate>
-        <>
-          Продажи
+        <div className={styles.graphContainer}>
+          <h2>Продажи</h2>
           <Doughnut
             data={{
               labels: Object.keys(sales),
@@ -57,7 +54,7 @@ const SalesChart = () => {
             }}
             options={config}
           />
-        </>
+        </div>
       </Slate>
     );
   }
