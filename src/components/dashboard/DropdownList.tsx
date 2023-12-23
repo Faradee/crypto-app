@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./dropdown.module.scss";
-const DropdownList = ({ cryptoNames }: { cryptoNames?: { cryptoId: string; cryptoName: string }[] }) => {
+const DropdownList = ({ cryptoNames }: { cryptoNames?: { cryptoSymbol: string; cryptoName: string }[] }) => {
   const [coin, setCoin] = useState<string>("all");
   const router = useRouter();
   return (
@@ -19,7 +19,7 @@ const DropdownList = ({ cryptoNames }: { cryptoNames?: { cryptoId: string; crypt
       {cryptoNames &&
         cryptoNames.map((coin, index) => {
           return (
-            <option key={index} value={coin.cryptoId}>
+            <option key={index} value={coin.cryptoSymbol}>
               {coin.cryptoName}
             </option>
           );

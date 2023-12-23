@@ -7,9 +7,7 @@ export const fetchCache = "force-no-store";
 const Page = async () => {
   return (
     <div className={styles.dashboard}>
-      <Slate>
-        <SalesChart />
-      </Slate>
+      <SalesChart />
     </div>
   );
 };

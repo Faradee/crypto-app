@@ -32,7 +32,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
   const handleSubmit = async () => {
     if (cash && coin) {
       const created = await createTransaction({
-        cryptoId: crypto.id,
+        cryptoSymbol: crypto.symbol,
         cryptoName: crypto.name,
         type: isBuy ? "BUY" : "SELL",
         cash,

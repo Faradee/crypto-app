@@ -1,8 +1,11 @@
 "use server";
+import { getIconUrl } from "@/components/priceTable/getIconUrl";
 import prisma from "../../db";
 import { verifyToken } from "./userActions";
+import Vibrant from "node-vibrant";
+import { Swatch } from "@vibrant/color";
 export type Transaction = {
-  cryptoId: string;
+  cryptoSymbol: string;
   cryptoName: string;
   type: "SELL" | "BUY";
   coin: string;
@@ -14,9 +17,21 @@ export const getSellTransactions = async () => {
     const transactions = await prisma.transaction.findMany({
       where: {
         userId: uuid,
+        type: "SELL",
       },
     });
+    const sales: { [key: string]: { cash: number; color: Array<number> } } = {};
+    if (transactions) {
+      for await (const transaction of transactions) {
+        const color = (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb;
+        !sales.hasOwnProperty(transaction.cryptoName)
+          ? (sales[transaction.cryptoName] = { cash: transaction.cash, color: color ? color : [0, 0, 0] })
+          : (sales[transaction.cryptoName].cash += transaction.cash);
+      }
+      return sales;
+    }
   }
+  return false;
 };
 export const getUserTransactionCoins = async () => {
   const uuid = await verifyToken();
@@ -27,7 +42,7 @@ export const getUserTransactionCoins = async () => {
       },
       select: {
         cryptoName: true,
-        cryptoId: true,
+        cryptoSymbol: true,
       },
     });
     const getNameList = () => {
@@ -41,14 +56,14 @@ export const getUserTransactionCoins = async () => {
   }
 };
 export const createTransaction = async (transaction: Transaction) => {
-  const { cryptoName, coin, cash } = transaction;
+  const { cryptoName, coin, cash, cryptoSymbol, type } = transaction;
   const uuid = await verifyToken();
   if (uuid) {
     const created = await prisma.transaction.create({
       data: {
-        cryptoId: transaction.cryptoId,
+        cryptoSymbol,
         cash: parseFloat(cash),
-        type: transaction.type,
+        type,
         cryptoName,
         amount: parseFloat(coin),
         userId: uuid,
