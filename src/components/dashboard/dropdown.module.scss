@@ -1,0 +1,12 @@
+@use "variables.scss" as *;
+.select {
+  width: 40rem;
+  padding: 1rem;
+  background-color: $secondaryColor;
+  outline: none;
+  border: none;
+  border-radius: 40px;
+}
+.select:hover {
+  background-color: $secondaryColor;
+}

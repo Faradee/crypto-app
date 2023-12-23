@@ -1,4 +1,9 @@
+@use "mixins.scss" as *;
 .header {
   display: flex;
   justify-content: center;
+}
+.container {
+  @include container;
+  align-items: center;
 }

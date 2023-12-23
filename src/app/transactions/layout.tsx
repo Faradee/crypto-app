@@ -1,11 +1,11 @@
-import DashBoardHeader from "@/components/dashboard/DashBoardHeader";
 import styles from "./transactions.module.scss";
 import { getUserTransactionCoins } from "@/actions/transactionActions";
+import DropdownList from "@/components/dashboard/DropdownList";
 const Layout = async ({ children }: { children: JSX.Element }) => {
   const cryptoNames = await getUserTransactionCoins();
   return (
-    <div>
-      <div className={styles.header}>{cryptoNames && <DashBoardHeader cryptoNames={cryptoNames} />}</div>
+    <div className={styles.container}>
+      <DropdownList cryptoNames={cryptoNames} />
       {children}
     </div>
   );
