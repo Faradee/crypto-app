@@ -16,14 +16,21 @@ model Favorite {
   @@id([cryptoId, userId])
 }
 
+enum TransactionType {
+  BUY
+  SELL
+}
+
 model Transaction {
-  cryptoId   String   @id
-  cryptoName String
-  cash       Float
-  createdAt  DateTime @default(now())
-  amount     Float
-  userId     String
-  user       User     @relation(fields: [userId], references: [uuid], onDelete: Cascade)
+  transactionId String          @id @default(uuid())
+  cryptoId      String
+  cryptoName    String
+  cash          Float
+  type          TransactionType
+  createdAt     DateTime        @default(now())
+  amount        Float
+  userId        String
+  user          User            @relation(fields: [userId], references: [uuid], onDelete: Cascade)
 }
 
 model User {

@@ -4,8 +4,19 @@ import { verifyToken } from "./userActions";
 export type Transaction = {
   cryptoId: string;
   cryptoName: string;
+  type: "SELL" | "BUY";
   coin: string;
   cash: string;
+};
+export const getSellTransactions = async () => {
+  const uuid = await verifyToken();
+  if (uuid) {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: uuid,
+      },
+    });
+  }
 };
 export const getUserTransactionCoins = async () => {
   const uuid = await verifyToken();
@@ -37,6 +48,7 @@ export const createTransaction = async (transaction: Transaction) => {
       data: {
         cryptoId: transaction.cryptoId,
         cash: parseFloat(cash),
+        type: transaction.type,
         cryptoName,
         amount: parseFloat(coin),
         userId: uuid,

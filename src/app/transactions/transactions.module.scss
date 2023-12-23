@@ -7,3 +7,7 @@
   @include container;
   align-items: center;
 }
+.dashboard {
+  display: grid;
+  gap: 1rem;
+}

@@ -26,7 +26,6 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
     else setCoin("");
   };
   const resetState = () => {
-    setIsBuy(true);
     setCash("");
     setCoin("");
   };
@@ -35,6 +34,7 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
       const created = await createTransaction({
         cryptoId: crypto.id,
         cryptoName: crypto.name,
+        type: isBuy ? "BUY" : "SELL",
         cash,
         coin,
       });
