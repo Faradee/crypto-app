@@ -8,6 +8,7 @@ const Page = async () => {
   return (
     <div className={styles.dashboard}>
       <SalesChart />
+      <div className={styles.section}></div>
     </div>
   );
 };

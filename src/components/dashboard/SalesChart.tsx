@@ -1,10 +1,10 @@
 "use client";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, Tooltip, Legend, ArcElement } from "chart.js";
-import styles from "./graphs.module.scss";
 import { getSellTransactions } from "@/actions/transactionActions";
 import { useEffect, useState } from "react";
 import Slate from "../containers/Slate";
+import GraphSkeleton from "./GraphSkeleton";
 ChartJS.register(Tooltip, Legend, ArcElement);
 const SalesChart = () => {
   const [sales, setSales] = useState<Awaited<ReturnType<typeof getSellTransactions>>>(false);
@@ -19,14 +19,14 @@ const SalesChart = () => {
   const config = {
     plugins: {
       legend: {
-        display: true,
+        display: false,
       },
     },
   };
   if (sales) {
     return (
       <Slate>
-        <div className={styles.graphContainer}>
+        <div>
           <h2>Продажи</h2>
           <Doughnut
             data={{
@@ -45,6 +45,6 @@ const SalesChart = () => {
         </div>
       </Slate>
     );
-  }
+  } else return <GraphSkeleton />;
 };
 export default SalesChart;
