@@ -25,7 +25,7 @@ export const getBuyTransactions = async () => {
   }
   return false;
 };
-export const getSellTransactions = async () => {
+export const getTotalSellTransactions = async () => {
   const uuid = await verifyToken();
   if (uuid) {
     const transactions = await prisma.transaction.findMany({
@@ -91,3 +91,6 @@ export const createTransaction = async (transaction: Transaction) => {
 };
 
 export type BuyTransactions = Awaited<ReturnType<typeof getBuyTransactions>>;
+export type SuccessfulBuyTransactions = Exclude<BuyTransactions, false>;
+export type SellTransactions = Awaited<ReturnType<typeof getTotalSellTransactions>>;
+export type SucessfulSellTransactions = Exclude<SellTransactions, false>;

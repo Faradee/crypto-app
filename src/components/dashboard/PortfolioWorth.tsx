@@ -26,7 +26,7 @@ const PortfolioWorth = ({
     <Slate>
       <div className={styles.card}>
         <h2>Стоимость портфолио</h2>
-        <div className={styles.worth}>
+        <div className={styles.value}>
           <span>$ {localeStringPrice(worth)}</span>
           {worthRef.current && worthRef.current < worth ? (
             <VscTriangleUp size={32} color="green" />

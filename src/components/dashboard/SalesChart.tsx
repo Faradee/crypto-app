@@ -1,16 +1,16 @@
 "use client";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, Tooltip, Legend, ArcElement } from "chart.js";
-import { getSellTransactions } from "@/actions/transactionActions";
+import { SellTransactions, getTotalSellTransactions } from "@/actions/transactionActions";
 import { useEffect, useState } from "react";
 import Slate from "../containers/Slate";
 import GraphSkeleton from "./GraphSkeleton";
 ChartJS.register(Tooltip, Legend, ArcElement);
 const SalesChart = () => {
-  const [sales, setSales] = useState<Awaited<ReturnType<typeof getSellTransactions>> | undefined>(undefined);
+  const [sales, setSales] = useState<SellTransactions | undefined>(undefined);
   useEffect(() => {
     const fetchData = async () => {
-      const sellTransactions = await getSellTransactions();
+      const sellTransactions = await getTotalSellTransactions();
       setSales(sellTransactions);
     };
     fetchData();
