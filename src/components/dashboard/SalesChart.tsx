@@ -5,6 +5,7 @@ import { SellTotalTransactions, getTotalSellTransactions } from "@/actions/trans
 import { useEffect, useState } from "react";
 import Slate from "../containers/Slate";
 import GraphSkeleton from "./GraphSkeleton";
+import styles from "./graphs.module.scss";
 ChartJS.register(Tooltip, Legend, ArcElement);
 const SalesChart = () => {
   const [sales, setSales] = useState<SellTotalTransactions | undefined>(undefined);
@@ -16,6 +17,8 @@ const SalesChart = () => {
     fetchData();
   }, []);
   const config = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -26,7 +29,7 @@ const SalesChart = () => {
   if (sales && Object.keys(sales).length > 0) {
     return (
       <Slate>
-        <>
+        <div className={styles.container}>
           <h2>Продажи</h2>
           <Doughnut
             data={{
@@ -42,7 +45,7 @@ const SalesChart = () => {
             }}
             options={config}
           />
-        </>
+        </div>
       </Slate>
     );
   } else if (sales === undefined) return <GraphSkeleton />;

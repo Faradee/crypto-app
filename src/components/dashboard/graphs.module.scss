@@ -13,6 +13,21 @@
     align-items: center;
   }
 }
+.container {
+  position: relative;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  h2 {
+    margin-bottom: 1rem;
+  }
+  canvas {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
 .card {
   display: flex;
   flex-direction: column;

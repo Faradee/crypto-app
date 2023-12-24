@@ -4,6 +4,7 @@ import { Chart as ChartJS, Tooltip, Legend, ArcElement } from "chart.js";
 import { BuyTotalTransactions, getTotalBuyTransactions } from "@/actions/transactionActions";
 import { useEffect, useState } from "react";
 import Slate from "../containers/Slate";
+import styles from "./graphs.module.scss";
 import GraphSkeleton from "./GraphSkeleton";
 ChartJS.register(Tooltip, Legend, ArcElement);
 const InvestmentsChart = () => {
@@ -16,6 +17,8 @@ const InvestmentsChart = () => {
     fetchData();
   }, []);
   const config = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -26,7 +29,7 @@ const InvestmentsChart = () => {
   if (investments && Object.keys(investments).length > 0) {
     return (
       <Slate>
-        <>
+        <div className={styles.container}>
           <h2>Инвестиции</h2>
           <Doughnut
             data={{
@@ -42,7 +45,7 @@ const InvestmentsChart = () => {
             }}
             options={config}
           />
-        </>
+        </div>
       </Slate>
     );
   } else if (investments === undefined) return <GraphSkeleton />;

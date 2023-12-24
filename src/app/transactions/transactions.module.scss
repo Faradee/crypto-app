@@ -14,8 +14,16 @@
   display: grid;
   gap: 1.5rem;
   position: relative;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 5fr;
+
+  @include lgScreen {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 4fr;
+  }
+
+  @include mdScreen {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, 1fr) repeat(2, 4fr) repeat(2, 2fr);
+  }
   .history {
     display: grid;
     gap: 1.5rem;
