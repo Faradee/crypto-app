@@ -3,6 +3,7 @@ import SalesChart from "@/components/dashboard/SalesChart";
 import PortfolioData from "@/components/dashboard/PortfolioData";
 import Slate from "@/components/containers/Slate";
 import InvestmentsChart from "@/components/dashboard/InvestmentsChart";
+import PortfolioHistory from "@/components/dashboard/PortfolioHistory";
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
@@ -12,6 +13,10 @@ const Page = async () => {
       <PortfolioData />
       <InvestmentsChart />
       <SalesChart />
+      <div className={styles.history}>
+        <PortfolioHistory />
+        <PortfolioHistory />
+      </div>
     </div>
   );
 };

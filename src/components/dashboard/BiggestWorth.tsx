@@ -13,7 +13,6 @@ const BiggestWorth = ({ sales, symbolMap }: { sales: SucessfulSellTotalTransacti
       biggest.coin = sale;
     }
   });
-  console.log(symbolMap);
   return (
     <Slate>
       <div className={styles.card}>
