@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Slate from "../containers/Slate";
 import {
   BuyTransactions,
-  SellTransactions,
+  SellTotalTransactions,
   getBuyTransactions,
   getTotalSellTransactions,
 } from "@/actions/transactionActions";
@@ -12,11 +12,20 @@ import PortfolioWorth from "./PortfolioWorth";
 import { CryptoData, fetchAssetList } from "@/actions/assetActions";
 import FieldSkeleton from "./FieldSkeleton";
 import TotalSales from "./TotalSales";
+import BiggestWorth from "./BiggestWorth";
 
 const PortfolioData = () => {
   const [investments, setInvestments] = useState<BuyTransactions>();
   const [rates, setRates] = useState<CryptoData>({});
-  const [sales, setSales] = useState<SellTransactions>({});
+  const [totalSales, setTotalSales] = useState<SellTotalTransactions>({});
+  const symbolMap = useMemo(() => {
+    const map: { [key: string]: string } | undefined | false = {};
+    if (investments)
+      investments.filter((investment) => {
+        map[investment.cryptoName] = investment.cryptoSymbol;
+      });
+    return map;
+  }, [investments]);
   const ratesWsRef = useRef<WebSocket | null>(null);
   const url = useMemo(() => {
     const assets = Object.keys(rates).join(",");
@@ -24,8 +33,8 @@ const PortfolioData = () => {
   }, [rates]);
   useEffect(() => {
     const fetchData = async () => {
-      const sales = await getTotalSellTransactions();
-      if (sales) setSales(sales);
+      const totalSales = await getTotalSellTransactions();
+      if (totalSales) setTotalSales(totalSales);
     };
     fetchData();
   }, []);
@@ -81,8 +90,12 @@ const PortfolioData = () => {
   return (
     <>
       {investments && rates ? <PortfolioWorth investments={investments} rates={rates} /> : <FieldSkeleton />}
-      {sales ? <TotalSales sales={sales} /> : <FieldSkeleton />}
-      <Slate></Slate>
+      {totalSales && Object.keys(totalSales).length ? <TotalSales sales={totalSales} /> : <FieldSkeleton />}
+      {symbolMap && totalSales && Object.keys(totalSales).length ? (
+        <BiggestWorth symbolMap={symbolMap} sales={totalSales} />
+      ) : (
+        <FieldSkeleton />
+      )}
       <Slate></Slate>
       <Slate></Slate>
       <Slate></Slate>

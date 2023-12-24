@@ -4,7 +4,7 @@ import { Rates } from "@/actions/assetActions";
 import FieldSkeleton from "./FieldSkeleton";
 import styles from "./graphs.module.scss";
 import localeStringPrice from "../priceTable/localeStringPrice";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { VscTriangleUp, VscTriangleDown } from "react-icons/vsc";
 //TODO: add swebsocket update
 const PortfolioWorth = ({
@@ -38,4 +38,4 @@ const PortfolioWorth = ({
     </Slate>
   );
 };
-export default PortfolioWorth;
+export default memo(PortfolioWorth);
