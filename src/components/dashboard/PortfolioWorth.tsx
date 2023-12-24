@@ -4,6 +4,7 @@ import { Rates } from "@/actions/assetActions";
 import FieldSkeleton from "./FieldSkeleton";
 import styles from "./graphs.module.scss";
 import localeStringPrice from "../priceTable/localeStringPrice";
+//TODO: add swebsocket update
 const PortfolioWorth = ({ investments, rates }: { investments?: BuyTransactions; rates?: Rates }) => {
   if (investments && rates) {
     const worth = investments.reduce(

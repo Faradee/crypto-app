@@ -81,6 +81,11 @@ const PriceGraph = ({
       tooltip: {
         intersect: false,
         mode: "index" as "index",
+        callbacks: {
+          label: function (context: any) {
+            return localeStringPrice(context.parsed.y);
+          },
+        },
       },
       legend: {
         display: false,
