@@ -96,10 +96,6 @@ const PortfolioData = () => {
       ) : (
         <FieldSkeleton />
       )}
-      <Slate></Slate>
-      <Slate></Slate>
-      <Slate></Slate>
-      <Slate></Slate>
     </>
   );
 };

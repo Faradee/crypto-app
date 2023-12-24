@@ -25,6 +25,28 @@ export const getBuyTransactions = async () => {
   }
   return false;
 };
+export const getTotalBuyTransactions = async () => {
+  const uuid = await verifyToken();
+  if (uuid) {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: uuid,
+        type: "BUY",
+      },
+    });
+    const investments: { [key: string]: { cash: number; color: Array<number> } } = {};
+    if (transactions) {
+      for await (const transaction of transactions) {
+        const color = (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb;
+        !investments.hasOwnProperty(transaction.cryptoName)
+          ? (investments[transaction.cryptoName] = { cash: transaction.cash, color: color ? color : [0, 0, 0] })
+          : (investments[transaction.cryptoName].cash += transaction.cash);
+      }
+      return investments;
+    }
+  }
+  return false;
+};
 export const getSellTransactions = async () => {
   const uuid = await verifyToken();
   if (uuid) {
@@ -105,5 +127,9 @@ export const createTransaction = async (transaction: Transaction) => {
 
 export type BuyTransactions = Awaited<ReturnType<typeof getBuyTransactions>>;
 export type SuccessfulBuyTransactions = Exclude<BuyTransactions, false>;
+export type BuyTotalTransactions = Awaited<ReturnType<typeof getTotalBuyTransactions>>;
+export type SuccessfulBuyTotalTransactions = Exclude<BuyTotalTransactions, false>;
+export type SellTransactions = Awaited<ReturnType<typeof getSellTransactions>>;
+export type SucessfulSellTransactions = Exclude<SellTransactions, false>;
 export type SellTotalTransactions = Awaited<ReturnType<typeof getTotalSellTransactions>>;
 export type SucessfulSellTotalTransactions = Exclude<SellTotalTransactions, false>;

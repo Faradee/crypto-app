@@ -26,7 +26,7 @@ const SalesChart = () => {
   if (sales && Object.keys(sales).length > 0) {
     return (
       <Slate>
-        <div>
+        <>
           <h2>Продажи</h2>
           <Doughnut
             data={{
@@ -42,7 +42,7 @@ const SalesChart = () => {
             }}
             options={config}
           />
-        </div>
+        </>
       </Slate>
     );
   } else if (sales === undefined) return <GraphSkeleton />;
