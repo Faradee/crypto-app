@@ -25,7 +25,7 @@ const PortfolioWorth = ({
   return (
     <Slate>
       <div className={styles.card}>
-        <h2>Стоимость портфолио</h2>
+        <h2>Стоимость купленных токенов</h2>
         <div className={styles.value}>
           <span>$ {localeStringPrice(worth)}</span>
           {worthRef.current && worthRef.current < worth ? (
