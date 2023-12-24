@@ -18,7 +18,8 @@ const SalesChart = () => {
   const config = {
     plugins: {
       legend: {
-        display: false,
+        display: true,
+        position: "right" as "right",
       },
     },
   };
