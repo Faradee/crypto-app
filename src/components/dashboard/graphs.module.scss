@@ -3,10 +3,21 @@
 }
 .worth {
   display: flex;
-  font-size: large;
+  font-size: larger;
   text-align: center;
   justify-content: center;
   padding: 1rem;
+  span {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+  }
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .flashGreen {
   background-color: rgba(60, 255, 60, 0.5);
