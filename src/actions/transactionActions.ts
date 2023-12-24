@@ -7,6 +7,7 @@ import { Swatch } from "@vibrant/color";
 export type Transaction = {
   cryptoSymbol: string;
   cryptoName: string;
+  cryptoId: string;
   type: "SELL" | "BUY";
   coin: string;
   cash: string;
@@ -76,6 +77,7 @@ export const createTransaction = async (transaction: Transaction) => {
     const created = await prisma.transaction.create({
       data: {
         cryptoSymbol,
+        cryptoId: transaction.cryptoId,
         cash: parseFloat(cash),
         type,
         cryptoName,
@@ -87,3 +89,5 @@ export const createTransaction = async (transaction: Transaction) => {
   }
   return false;
 };
+
+export type BuyTransactions = Awaited<ReturnType<typeof getBuyTransactions>>;

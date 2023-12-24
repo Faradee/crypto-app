@@ -7,12 +7,11 @@ import Slate from "../containers/Slate";
 import GraphSkeleton from "./GraphSkeleton";
 ChartJS.register(Tooltip, Legend, ArcElement);
 const SalesChart = () => {
-  const [sales, setSales] = useState<Awaited<ReturnType<typeof getSellTransactions>>>(false);
+  const [sales, setSales] = useState<Awaited<ReturnType<typeof getSellTransactions>> | undefined>(undefined);
   useEffect(() => {
     const fetchData = async () => {
       const sellTransactions = await getSellTransactions();
       setSales(sellTransactions);
-      console.log(sellTransactions);
     };
     fetchData();
   }, []);
@@ -23,7 +22,7 @@ const SalesChart = () => {
       },
     },
   };
-  if (sales) {
+  if (sales && Object.keys(sales).length > 0) {
     return (
       <Slate>
         <div>
@@ -45,6 +44,7 @@ const SalesChart = () => {
         </div>
       </Slate>
     );
-  } else return <GraphSkeleton />;
+  } else if (sales === undefined) return <GraphSkeleton />;
+  else return <></>;
 };
 export default SalesChart;

@@ -57,6 +57,33 @@ export const fetchAssets = async (offset: number | string = 0, limit: number | s
   });
   return newData;
 };
+export const fetchAssetList = async (list: string[]) => {
+  const uuid = await verifyToken();
+  if (uuid) {
+    const headers = new Headers({
+      Authorization: `Bearer ${process.env.COINCAP_KEY}`,
+    });
+    const url = `https://api.coincap.io/v2/assets?ids=${list.join(",")}`;
+    const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
+    const { data } = await res.json();
+    const newData: CryptoData = {};
+    if (data) {
+      data.map((crypto: any) => {
+        newData[crypto.id] = {
+          id: crypto.id,
+          rank: crypto.rank,
+          marketCap: crypto.marketCapUsd,
+          symbol: crypto.symbol,
+          name: crypto.name,
+          priceUsd: parseFloat(crypto.priceUsd),
+          changePercent24Hr: parseFloat(crypto.changePercent24Hr),
+        };
+      });
+      return newData;
+    }
+  }
+  return false;
+};
 export const fetchAssetHistory = async (
   cryptoId: string,
   range: "day" | "week" | "month" | "half-year" | "year" | "all"
@@ -179,3 +206,5 @@ export const unsetFavorite = async (cryptoId: string) => {
   }
   return false;
 };
+
+export type Rates = Awaited<ReturnType<typeof fetchAssetList>>;

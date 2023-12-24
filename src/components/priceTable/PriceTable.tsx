@@ -49,13 +49,11 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
     priceWsRef.current.onmessage = (message) => {
       const data = JSON.parse(message.data);
       const newData: CryptoData = {};
-      //TODO: ADD MATHEMATIC CHANGE TO CHANGE IN 24H
       Object.keys(data).map((key) => {
         data[key] = parseFloat(data[key]);
         newData[key] = {
           ...currentData[key],
           priceUsd: data[key],
-          // changePercent24Hr: currentData[key].changePercent24Hr * (data[key] / currentData[key].priceUsd),
         };
       });
 

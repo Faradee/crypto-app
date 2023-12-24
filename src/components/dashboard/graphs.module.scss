@@ -1,3 +1,16 @@
 .skeleton {
   display: flex;
 }
+.worth {
+  display: flex;
+  font-size: large;
+  text-align: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.flashGreen {
+  background-color: rgba(60, 255, 60, 0.5);
+}
+.flashRed {
+  background-color: rgba(255, 60, 60, 0.5);
+}

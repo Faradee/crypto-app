@@ -24,6 +24,7 @@ enum TransactionType {
 model Transaction {
   transactionId String          @id @default(uuid())
   cryptoSymbol  String
+  cryptoId      String
   cryptoName    String
   cash          Float
   type          TransactionType
