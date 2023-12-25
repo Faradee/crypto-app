@@ -22,6 +22,7 @@ const SalesChart = () => {
     plugins: {
       legend: {
         display: true,
+        onClick: () => {},
         position: "right" as "right",
       },
     },

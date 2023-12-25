@@ -63,6 +63,7 @@ const PortfolioHistory = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        onClick: () => {},
         display: true,
       },
     },
@@ -93,12 +94,12 @@ const PortfolioHistory = () => {
                 datasets: [
                   {
                     label: "Инвестиции",
-                    data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
+                    data: investments.data.map((investment) => (investment ? investment.number : 0)) as any,
                     backgroundColor: "rgba(0,255,0,0.5)",
                   },
                   {
                     label: "Продажи",
-                    data: investments.data.map((investment) => (investment ? investment.number : 0)) as any,
+                    data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
                     backgroundColor: "rgba(255,0,0,0.9)",
                   },
                 ],

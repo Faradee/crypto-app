@@ -22,6 +22,7 @@ const InvestmentsChart = () => {
     plugins: {
       legend: {
         display: true,
+        onClick: () => {},
         position: "right" as "right",
       },
     },
