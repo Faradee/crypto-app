@@ -6,7 +6,7 @@ const GraphSkeleton = () => {
   return (
     <Slate>
       <Skeleton className={styles.skeleton} height={30} />
-      <Skeleton className={styles.skeleton} height={300} />
+      <Skeleton className={styles.skeleton} height={200} />
     </Slate>
   );
 };

@@ -3,7 +3,6 @@ import { getIconUrl } from "@/components/priceTable/getIconUrl";
 import prisma from "../../db";
 import { verifyToken } from "./userActions";
 import Vibrant from "node-vibrant";
-import { Swatch } from "@vibrant/color";
 export type Transaction = {
   cryptoSymbol: string;
   cryptoName: string;

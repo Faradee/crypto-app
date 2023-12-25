@@ -1,4 +1,5 @@
 @use "mixins.scss" as *;
+@use "variables.scss" as *;
 .header {
   display: flex;
   justify-content: center;
@@ -11,17 +12,15 @@
   }
 }
 .dashboard {
-  display: grid;
   gap: 1.5rem;
   position: relative;
-
   @include lgScreen {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 3fr;
   }
-
   @include mdScreen {
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(3, 1fr) repeat(2, 4fr) repeat(2, 2fr);
+    display: flex;
+    flex-direction: column;
   }
 }

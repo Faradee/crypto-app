@@ -5,6 +5,7 @@ import Slate from "../containers/Slate";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styles from "./graphs.module.scss";
+import GraphSkeleton from "./GraphSkeleton";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 const PortfolioHistory = () => {
   const [investments, setInvestments] = useState<{
@@ -80,32 +81,34 @@ const PortfolioHistory = () => {
         return seen.hasOwnProperty(date) ? false : (seen[date] = true);
       }
     });
-    return (
-      <Slate>
-        <div className={styles.container}>
-          <h2>История транзакций</h2>
-          <Bar
-            data={{
-              labels: labels,
+    if (labels.length)
+      return (
+        <Slate>
+          <div className={styles.container}>
+            <h2>История транзакций</h2>
+            <Bar
+              data={{
+                labels: labels,
 
-              datasets: [
-                {
-                  label: "Купленные токены",
-                  data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
-                  backgroundColor: "green",
-                },
-                {
-                  label: "Проданные токены",
-                  data: investments.data.map((investment) => (investment ? investment.number : 0)) as any,
-                  backgroundColor: "red",
-                },
-              ],
-            }}
-            options={config}
-          />
-        </div>
-      </Slate>
-    );
-  } else return <div>...loading</div>;
+                datasets: [
+                  {
+                    label: "Инвестиции",
+                    data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
+                    backgroundColor: "rgba(0,255,0,0.5)",
+                  },
+                  {
+                    label: "Продажи",
+                    data: investments.data.map((investment) => (investment ? investment.number : 0)) as any,
+                    backgroundColor: "rgba(255,0,0,0.9)",
+                  },
+                ],
+              }}
+              options={config}
+            />
+          </div>
+        </Slate>
+      );
+  }
+  return <GraphSkeleton />;
 };
 export default PortfolioHistory;
