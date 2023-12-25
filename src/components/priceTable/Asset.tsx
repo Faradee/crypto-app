@@ -5,7 +5,6 @@ import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
 import localeStringPrice from "./localeStringPrice";
 import { getIconUrl } from "./getIconUrl";
-//TODO: ADD TRANSACTION CREATION
 const AssetDetails = dynamic(() => import("./AssetDetails"));
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();

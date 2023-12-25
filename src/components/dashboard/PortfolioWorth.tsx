@@ -6,7 +6,6 @@ import styles from "./graphs.module.scss";
 import localeStringPrice from "../priceTable/localeStringPrice";
 import { useEffect, useRef, memo } from "react";
 import { VscTriangleUp, VscTriangleDown } from "react-icons/vsc";
-//TODO: add swebsocket update
 const PortfolioWorth = ({
   investments,
   rates,
