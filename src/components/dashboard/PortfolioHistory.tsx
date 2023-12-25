@@ -63,7 +63,6 @@ const PortfolioHistory = () => {
     plugins: {
       legend: {
         display: true,
-        position: "right" as "right",
       },
     },
   };
