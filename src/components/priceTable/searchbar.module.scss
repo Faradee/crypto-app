@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
+  width: 30rem;
   .searchbar {
     height: 1rem;
     width: 100%;
@@ -12,4 +13,8 @@
     background: whitesmoke;
     color: black;
   }
+}
+.close {
+  cursor: pointer;
+  display: flex;
 }

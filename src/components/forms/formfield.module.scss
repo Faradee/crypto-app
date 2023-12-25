@@ -4,7 +4,10 @@
   @include textfield;
   background-color: $inputBackground;
   padding: 0.5rem;
-  height: 1.5rem;
+  height: 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: text;
   input {
     height: 100%;
     width: 100%;
