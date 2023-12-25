@@ -1,10 +1,112 @@
+"use client";
+import { useEffect, useState } from "react";
+import { getBuyTransactions, getSellTransactions } from "@/actions/transactionActions";
 import Slate from "../containers/Slate";
-
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import styles from "./graphs.module.scss";
+ChartJS.register(CategoryScale, LinearScale, BarElement);
 const PortfolioHistory = () => {
-  return (
-    <Slate>
-      <h2>История портфолио</h2>
-    </Slate>
-  );
+  const [investments, setInvestments] = useState<{
+    data: { date: string; number: number }[] | null[];
+  }>({ data: [null] });
+  const [sales, setSales] = useState<{
+    data: { date: string; number: number }[] | null[];
+  }>({ data: [null] });
+  const formatDate = (date: Date) => {
+    return date.toLocaleString("ru", { day: "numeric", month: "numeric" });
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const sales = await getSellTransactions();
+      const investments = await getBuyTransactions();
+      if (investments) {
+        const seen: { [key: string]: boolean } = {};
+        const investmentDates = investments
+          .map((investment) => formatDate(investment.createdAt))
+          .filter((date) => {
+            return seen.hasOwnProperty(date) ? false : (seen[date] = true);
+          });
+        const investmentData = investmentDates.map((date) => {
+          return {
+            date: date,
+            number: investments.filter((investment) => formatDate(investment.createdAt) === date).length,
+          };
+        });
+        setInvestments({
+          data: investmentData ? investmentData : [null],
+        });
+      }
+      if (sales) {
+        const seen: { [key: string]: boolean } = {};
+        const saleDates = sales
+          .map((sale) => formatDate(sale.createdAt))
+          .filter((date) => {
+            return seen.hasOwnProperty(date) ? false : (seen[date] = true);
+          });
+        const salesData = saleDates.map((date) => {
+          return { date: date, number: sales.filter((sale) => formatDate(sale.createdAt) === date).length };
+        });
+        setSales({
+          data: salesData ? salesData : [null],
+        });
+      }
+    };
+    fetchData();
+  }, []);
+  const config = {
+    y: {
+      beginsAtZero: false,
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "right" as "right",
+      },
+    },
+  };
+  if (investments.data.length || sales.data.length) {
+    const seen: { [key: string]: boolean } = {};
+    const labels = [
+      ...investments.data.map((investment) => {
+        if (investment) return investment.date;
+      }),
+      ...sales.data.map((sale) => {
+        if (sale) return sale.date;
+      }),
+    ].filter((date) => {
+      if (date) {
+        return seen.hasOwnProperty(date) ? false : (seen[date] = true);
+      }
+    });
+    return (
+      <Slate>
+        <div className={styles.container}>
+          <h2>История транзакций</h2>
+          <Bar
+            data={{
+              labels: labels,
+
+              datasets: [
+                {
+                  label: "Купленные токены",
+                  data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
+                  backgroundColor: "green",
+                },
+                {
+                  label: "Проданные токены",
+                  data: investments.data.map((investment) => (investment ? investment.number : 0)) as any,
+                  backgroundColor: "red",
+                },
+              ],
+            }}
+            options={config}
+          />
+        </div>
+      </Slate>
+    );
+  } else return <div>...loading</div>;
 };
 export default PortfolioHistory;

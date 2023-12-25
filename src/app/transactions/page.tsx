@@ -13,10 +13,7 @@ const Page = async () => {
       <PortfolioData />
       <InvestmentsChart />
       <SalesChart />
-      <div className={styles.history}>
-        <PortfolioHistory />
-        <PortfolioHistory />
-      </div>
+      <PortfolioHistory />
     </div>
   );
 };

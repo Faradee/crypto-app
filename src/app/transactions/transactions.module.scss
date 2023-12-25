@@ -24,10 +24,4 @@
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(3, 1fr) repeat(2, 4fr) repeat(2, 2fr);
   }
-  .history {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-  }
 }
