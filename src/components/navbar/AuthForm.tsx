@@ -95,41 +95,47 @@ const AuthForm = ({
       className={styles.form}
       id="auth"
     >
-      <FormField
-        placeholder="Email адрес"
-        type="email"
-        onChange={handleChange}
-        icon={BsFillEnvelopeFill}
-        name="email"
-        useState={[email, setAuthProp]}
-      />
-      <FormField
-        type={showPassword ? "text" : "password"}
-        placeholder="Пароль"
-        useState={[password, setAuthProp]}
-        onChange={handleChange}
-        name="password"
-        icon={AiFillLock}
-      >
-        {!isSignup && (
-          <div className={styles.visibilitySwitch} onClick={handleShowPassword}>
-            {showPassword ? (
-              <AiFillEye color={iconColor} size={20} />
-            ) : (
-              <AiFillEyeInvisible color={iconColor} size={20} />
-            )}
-          </div>
-        )}
-      </FormField>
-      {isSignup && (
+      <div className={styles.field}>
         <FormField
-          useState={[confirmPassword, setAuthProp]}
-          placeholder="Подтвердите пароль"
-          type={showPassword ? "text" : "password"}
+          placeholder="Email адрес"
+          type="email"
           onChange={handleChange}
-          name="confirmPassword"
+          icon={BsFillEnvelopeFill}
+          name="email"
+          useState={[email, setAuthProp]}
         />
-      )}
+      </div>
+      <div className={styles.field}>
+        <FormField
+          type={showPassword ? "text" : "password"}
+          placeholder="Пароль"
+          useState={[password, setAuthProp]}
+          onChange={handleChange}
+          name="password"
+          icon={AiFillLock}
+        >
+          {!isSignup && (
+            <div className={styles.visibilitySwitch} onClick={handleShowPassword}>
+              {showPassword ? (
+                <AiFillEye color={iconColor} size={20} />
+              ) : (
+                <AiFillEyeInvisible color={iconColor} size={20} />
+              )}
+            </div>
+          )}
+        </FormField>
+      </div>
+      <div className={styles.field}>
+        {isSignup && (
+          <FormField
+            useState={[confirmPassword, setAuthProp]}
+            placeholder="Подтвердите пароль"
+            type={showPassword ? "text" : "password"}
+            onChange={handleChange}
+            name="confirmPassword"
+          />
+        )}
+      </div>
       {error && <span className={styles.error}>{error}</span>}
       <Button submit title={isSignup ? "Создать аккаунт" : "Войти"} />
     </form>

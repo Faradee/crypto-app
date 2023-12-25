@@ -5,10 +5,7 @@
   text-align: center;
   border-collapse: collapse;
   margin-bottom: 1rem;
-  @include lgScreen {
-    width: 60%;
-  }
-
+  width: 100%;
   img {
     display: block;
     margin: 0 auto;
@@ -70,7 +67,9 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 1rem;
-  width: 100%;
+  @include lgScreen {
+    width: 60%;
+  }
 }
 .detailsTr:hover {
   background-color: $primaryColor !important;

@@ -4,6 +4,7 @@ import { CryptoData, fetchAssets } from "@/actions/assetActions";
 import Asset from "./Asset";
 import styles from "./priceTable.module.scss";
 import Button from "../forms/Button";
+import Searchbar from "./Searchbar";
 
 const PriceTable = ({ data }: { data: CryptoData }) => {
   const [currentData, setCurrentData] = useState<CryptoData>(data);
@@ -62,6 +63,7 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   }, [currentData]);
   return (
     <div className={styles.tableContainer}>
+      <Searchbar />
       <table className={styles.priceTable}>
         <thead>
           <tr>

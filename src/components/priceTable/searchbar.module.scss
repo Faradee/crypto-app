@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  .searchbar {
+    height: 1rem;
+    width: 100%;
+    padding: 1rem;
+    background: whitesmoke;
+    color: black;
+  }
+}
