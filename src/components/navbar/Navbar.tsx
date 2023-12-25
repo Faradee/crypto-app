@@ -8,7 +8,7 @@ import styles from "./navbar.module.scss";
 import { IconType } from "react-icons";
 import AuthContext from "./AuthContext";
 import { signUserOut } from "@/actions/userActions";
-import { RiBitCoinFill } from "react-icons/ri";
+import { RiBitCoinFill, RiLogoutBoxRLine, RiLoginBoxLine } from "react-icons/ri";
 //todo: add watched cryptos and dashboard
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -46,10 +46,16 @@ const Navbar = () => {
           <li>
             {!authorized ? (
               <button className={styles.auth} onClick={() => setIsAuth(true)}>
+                <div>
+                  <RiLoginBoxLine size={20} />
+                </div>
                 Войти
               </button>
             ) : (
               <button className={styles.auth} onClick={handleSignOut}>
+                <div>
+                  <RiLogoutBoxRLine size={20} />
+                </div>
                 Выйти
               </button>
             )}
