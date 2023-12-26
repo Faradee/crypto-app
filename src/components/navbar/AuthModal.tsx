@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AiOutlineClose } from "react-icons/ai";
 import { LoaderWrapper } from "../loader/LoaderWrapper";
 import ModalContainer from "../containers/ModalContainer";
-import logo from "/public/vercel.png";
+import logo from "/public/placeholder.svg";
 import AuthForm from "./AuthForm";
 import { useClickOutside } from "../containers/useClickOutside";
 import styles from "./auth.module.scss";
