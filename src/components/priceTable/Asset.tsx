@@ -1,14 +1,16 @@
-import React, { useEffect, memo, useRef } from "react";
+import React, { useEffect, memo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import styles from "./priceTable.module.scss";
 import { Crypto } from "@/actions/assetActions";
 import localeStringPrice from "./localeStringPrice";
 import { getIconUrl } from "./getIconUrl";
+import placeholder from "/public/placeholder.svg";
 const AssetDetails = dynamic(() => import("./AssetDetails"));
 const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; onClick: () => void }) => {
   const priceRef = useRef<number>();
   const rowRef = useRef<HTMLTableRowElement>(null);
+  const [icon, setIcon] = useState<string | StaticImageData>(getIconUrl(crypto.symbol));
   useEffect(() => {
     if (rowRef.current && priceRef.current) {
       rowRef.current.className = "";
@@ -25,7 +27,19 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
     <>
       <tr ref={rowRef} onClick={onClick}>
         <td>{crypto.rank}</td>
-        <td>{<Image src={getIconUrl(crypto.symbol)} width={40} height={40} alt={crypto.symbol} />}</td>
+        <td>
+          {
+            <Image
+              src={icon}
+              width={40}
+              height={40}
+              alt={crypto.symbol}
+              onErrorCapture={() => {
+                setIcon(placeholder);
+              }}
+            />
+          }
+        </td>
         <td>{crypto.name}</td>
         <td>${localeStringPrice(crypto.priceUsd)}</td>
         <td>${Math.floor(crypto.marketCap).toLocaleString()}</td>
@@ -40,7 +54,7 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
       {active && (
         <tr className={styles.detailsTr}>
           <td colSpan={6} className={styles.detailsTd}>
-            <AssetDetails crypto={crypto} icon={getIconUrl(crypto.symbol)} />{" "}
+            <AssetDetails crypto={crypto} icon={icon} />{" "}
           </td>
         </tr>
       )}

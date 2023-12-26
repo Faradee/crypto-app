@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, memo, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import styles from "./details.module.scss";
 import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
@@ -10,8 +10,9 @@ import IntervalSwitch from "./IntervalSwitch";
 import Button from "../forms/Button";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+
 const PriceGraph = dynamic(() => import("./PriceGraph"));
-const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string }) => {
+const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticImageData }) => {
   const currentDate = new Date();
   const pathname = usePathname();
   const formattedDate = currentDate
