@@ -23,6 +23,9 @@ const Asset = ({ crypto, active, onClick }: { crypto: Crypto; active: boolean; o
     }
     priceRef.current = crypto.priceUsd;
   }, [crypto.priceUsd]);
+  useEffect(() => {
+    setIcon(getIconUrl(crypto.symbol));
+  }, [crypto.symbol]);
   return (
     <>
       <tr ref={rowRef} onClick={onClick}>

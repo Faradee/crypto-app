@@ -141,21 +141,24 @@ export const fetchAssetHistory = async (
   const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}&start=${start.getTime()}&end=${end}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data }: { data: History[] } = await res.json();
-  let high = parseFloat(data[0].priceUsd);
-  let low = parseFloat(data[0].priceUsd);
-  let average = parseFloat(data[0].priceUsd);
-  const formattedHistory: { priceUsd: number; date: Date }[] = [];
-  data.forEach((point, index) => {
-    const currentDate = new Date(point.date);
-    formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: currentDate });
-    const price = parseFloat(point.priceUsd);
-    average += price;
-    if (price > high) high = price;
-    else if (price < low) low = price;
-  });
-  average = average / data.length;
-  const change = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(4);
-  return { historyData: formattedHistory, marketData: { low, high, average, change } };
+  if (data.length) {
+    let high = parseFloat(data[0].priceUsd);
+    let low = parseFloat(data[0].priceUsd);
+    let average = parseFloat(data[0].priceUsd);
+    let change = "";
+    const formattedHistory: { priceUsd: number; date: Date }[] = [];
+    data.forEach((point, index) => {
+      const currentDate = new Date(point.date);
+      formattedHistory.push({ priceUsd: parseFloat(point.priceUsd), date: currentDate });
+      const price = parseFloat(point.priceUsd);
+      average += price;
+      if (price > high) high = price;
+      else if (price < low) low = price;
+    });
+    average = average / data.length;
+    change = ((parseFloat(data[data.length - 1].priceUsd) / parseFloat(data[0].priceUsd) - 1) * 100).toPrecision(4);
+    return { historyData: formattedHistory, marketData: { low, high, average, change } };
+  }
 };
 export const getFavorite = async (cryptoId: string) => {
   const uuid = await verifyToken();

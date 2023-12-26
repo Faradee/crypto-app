@@ -10,6 +10,7 @@ import IntervalSwitch from "./IntervalSwitch";
 import Button from "../forms/Button";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import GraphSkeleton from "../dashboard/GraphSkeleton";
 
 const PriceGraph = dynamic(() => import("./PriceGraph"));
 const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticImageData }) => {
@@ -24,6 +25,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticI
     .slice(0, -3);
   const [range, setRange] = useState<"day" | "week" | "month" | "half-year" | "year">("day");
   const [history, setHistory] = useState<Awaited<ReturnType<typeof fetchAssetHistory>>>();
+  const [loading, setLoading] = useState<boolean>(true);
   const historyRef = useRef<typeof history>();
   const rangeRef = useRef<typeof range>();
   useEffect(() => {
@@ -33,44 +35,48 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticI
       setHistory(history);
       historyRef.current = history;
       rangeRef.current = range;
+      setLoading(false);
     };
     fetchData();
   }, [crypto.id, range]);
-  return (
-    <>
-      <div className={styles.headContainer}>
-        <div className={styles.title}>
-          <div className={styles.logo}>
-            <Image src={icon} alt={crypto.id} width={64} height={64} />
+  if (!loading && history?.historyData.length)
+    return (
+      <>
+        <div className={styles.headContainer}>
+          <div className={styles.title}>
+            <div className={styles.logo}>
+              <Image src={icon} alt={crypto.id} width={64} height={64} />
+            </div>
+            <div className={styles.column}>
+              <span className={styles.name}>{`${crypto.name} (${crypto.symbol.toUpperCase()})`}</span>
+              <span>{formattedDate}</span>
+            </div>
           </div>
-          <div className={styles.column}>
-            <span className={styles.name}>{`${crypto.name} (${crypto.symbol.toUpperCase()})`}</span>
-            <span>{formattedDate}</span>
-          </div>
+          <MarketData marketData={history?.marketData} />
         </div>
-        <MarketData marketData={history?.marketData} />
-      </div>
-      <div className={styles.options}>
-        <IntervalSwitch range={range} setRange={setRange} />
-        {pathname === "/" ? (
-          <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
-            <Button title="Создать транзакцию" />
-          </Link>
-        ) : (
-          <div className={styles.price}>
-            1 {crypto.symbol} = ${crypto.priceUsd}
-          </div>
+        <div className={styles.options}>
+          <IntervalSwitch range={range} setRange={setRange} />
+          {pathname === "/" ? (
+            <Link href={`/asset/${crypto.id}`} className={styles.buttonContainer}>
+              <Button title="Создать транзакцию" />
+            </Link>
+          ) : (
+            <div className={styles.price}>
+              1 {crypto.symbol} = ${crypto.priceUsd}
+            </div>
+          )}
+        </div>
+        {historyRef.current?.historyData && rangeRef.current && (
+          <PriceGraph
+            range={rangeRef.current}
+            history={historyRef.current.historyData}
+            color={historyRef.current.marketData.change[0] === "-" ? "red" : "green"}
+          />
         )}
-      </div>
-      {historyRef.current?.historyData && rangeRef.current && (
-        <PriceGraph
-          range={rangeRef.current}
-          history={historyRef.current.historyData}
-          color={historyRef.current.marketData.change[0] === "-" ? "red" : "green"}
-        />
-      )}
-    </>
-  );
+      </>
+    );
+  else if (loading) return <GraphSkeleton />;
+  else return <div>Нету данных</div>;
 };
 
 export default memo(AssetDetails);
