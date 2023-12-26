@@ -34,7 +34,7 @@ const Navbar = () => {
           </Link>
         </div>
         <ul className={styles.optionList}>
-          <li>
+          <li className={!authorized ? styles.disabled : ""}>
             <Link href="/transactions">
               <div>
                 <RiBitCoinFill size={20} />
