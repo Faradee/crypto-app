@@ -5,13 +5,13 @@ import Asset from "./Asset";
 import styles from "./priceTable.module.scss";
 import Button from "../forms/Button";
 import Searchbar from "./Searchbar";
-
+import { useSearchParams } from "next/navigation";
 const PriceTable = ({ data }: { data: CryptoData }) => {
+  const params = useSearchParams();
   const [currentData, setCurrentData] = useState<CryptoData>(data);
   const priceWsRef = useRef<WebSocket | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>();
   const [page, setPage] = useState<number>(1);
-  const [isSearch, setIsSearch] = useState<boolean>(false);
   const url = useMemo(() => {
     const assets = Object.keys(currentData).join(",");
     return `wss://ws.coincap.io/prices?assets=${assets}`;
@@ -28,10 +28,6 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
     const newData = await fetchAssets(20 * page, 20 * (page + 1));
     setCurrentData({ ...currentData, ...newData });
     setPage(page + 1);
-  };
-  const handleSearch = (data: CryptoData) => {
-    setIsSearch(true);
-    setCurrentData(data);
   };
   //Из за стрикт мода первое подключение всегда будет проваливатся в development, в production должно вести себя правильно
   useEffect(() => {
@@ -66,9 +62,12 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
       setCurrentData({ ...currentData, ...newData });
     };
   }, [currentData]);
+  useEffect(() => {
+    setCurrentData(data);
+  }, [data]);
   return (
     <div className={styles.tableContainer}>
-      <Searchbar handleSearch={handleSearch} />
+      <Searchbar />
       <table className={styles.priceTable}>
         <thead>
           <tr>
@@ -97,7 +96,7 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
             })}
         </tbody>
       </table>
-      {!isSearch && (
+      {!params.get("search") && (
         <div className={styles.loadButton}>
           <Button title="Загрузить еще" onClick={handlePagination} async />
         </div>

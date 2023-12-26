@@ -1,20 +1,21 @@
 "use client";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import styles from "./searchbar.module.scss";
 import FormField from "../forms/FormField";
 import Button from "../forms/Button";
-import { CryptoData, searchAsset } from "@/actions/assetActions";
-
-const Searchbar = ({ handleSearch }: { handleSearch: (data: CryptoData) => void }) => {
+import { useRouter, useSearchParams } from "next/navigation";
+const Searchbar = () => {
+  const params = useSearchParams();
+  const router = useRouter();
   const [query, setQuery] = useState<string>("");
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (query) {
-      const res = await searchAsset(query);
-      handleSearch(res);
-    }
+    router.replace(`/?search=${query}`);
   };
+  useEffect(() => {
+    if (!params.get("search")) setQuery("");
+  }, [params]);
   return (
     <form onSubmit={(e) => handleSubmit(e)} autoComplete="off">
       <div className={styles.container}>
