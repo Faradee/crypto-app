@@ -18,7 +18,7 @@ const Searchbar = ({ handleSearch }: { handleSearch: (data: CryptoData) => void 
   return (
     <form onSubmit={(e) => handleSubmit(e)} autoComplete="off">
       <div className={styles.container}>
-        <FormField type="text" name="query" useState={[query, setQuery]}>
+        <FormField type="text" name="query" placeholder="Введите название криптовалюты" useState={[query, setQuery]}>
           {query && (
             <div className={styles.close} onClick={() => setQuery("")}>
               <IoMdClose size={30} />
