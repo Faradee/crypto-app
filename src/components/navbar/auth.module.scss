@@ -62,6 +62,9 @@
   width: 66%;
 }
 .close {
+  @include mdScreen {
+    display: none;
+  }
   position: absolute;
   right: -3rem;
   top: 0;
