@@ -31,7 +31,6 @@ const AssetDetails = ({ crypto }: { crypto: Crypto }) => {
   const rangeRef = useRef<typeof range>();
   useEffect(() => {
     const fetchData = async () => {
-      setHistory(undefined);
       const history = await fetchAssetHistory(crypto.id, range);
       setHistory(history);
       historyRef.current = history;
