@@ -9,6 +9,7 @@ import { getIconUrl } from "../priceTable/getIconUrl";
 import { Transaction, createTransaction } from "@/actions/transactionActions";
 import Button from "../forms/Button";
 import AuthContext from "../navbar/AuthContext";
+import ImageFallback from "../utils/ImageFallback";
 const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
   const [isBuy, setIsBuy] = useState<boolean>(true);
   const [cash, setCash] = useState<string>("");
@@ -64,7 +65,13 @@ const TransactionWindow = ({ crypto }: { crypto: Crypto }) => {
           <div className={styles.formField}>
             <FormField type="number" name="coin" placeholder="0" onChange={handleCoinChange} useState={[coin, setCoin]}>
               <div className={styles.currency}>
-                <Image src={getIconUrl(crypto.symbol)} width={30} height={30} alt={crypto.name} />
+                <ImageFallback
+                  width={30}
+                  height={30}
+                  src={getIconUrl(crypto.symbol)}
+                  alt={crypto.symbol}
+                  fallback={false}
+                />
                 {crypto.symbol}
               </div>
             </FormField>

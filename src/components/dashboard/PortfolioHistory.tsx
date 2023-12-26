@@ -100,7 +100,7 @@ const PortfolioHistory = () => {
                   {
                     label: "Продажи",
                     data: sales.data.map((sale) => (sale ? sale.number : 0)) as any,
-                    backgroundColor: "rgba(255,0,0,0.9)",
+                    backgroundColor: "rgba(255,0,0,0.7)",
                   },
                 ],
               }}
@@ -109,7 +109,7 @@ const PortfolioHistory = () => {
           </div>
         </Slate>
       );
+    else return <GraphSkeleton />;
   }
-  return <GraphSkeleton />;
 };
 export default PortfolioHistory;

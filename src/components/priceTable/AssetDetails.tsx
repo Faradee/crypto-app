@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, memo, useRef } from "react";
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
 import styles from "./details.module.scss";
 import MarketData from "./MarketData";
 import { Crypto } from "@/actions/assetActions";
@@ -11,9 +10,11 @@ import Button from "../forms/Button";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import GraphSkeleton from "../dashboard/GraphSkeleton";
+import ImageFallback from "../utils/ImageFallback";
+import { getIconUrl } from "./getIconUrl";
 
 const PriceGraph = dynamic(() => import("./PriceGraph"));
-const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticImageData }) => {
+const AssetDetails = ({ crypto }: { crypto: Crypto }) => {
   const currentDate = new Date();
   const pathname = usePathname();
   const formattedDate = currentDate
@@ -45,7 +46,7 @@ const AssetDetails = ({ crypto, icon }: { crypto: Crypto; icon: string | StaticI
         <div className={styles.headContainer}>
           <div className={styles.title}>
             <div className={styles.logo}>
-              <Image src={icon} alt={crypto.id} width={64} height={64} />
+              <ImageFallback width={64} height={64} src={getIconUrl(crypto.symbol)} alt={crypto.symbol} />
             </div>
             <div className={styles.column}>
               <span className={styles.name}>{`${crypto.name} (${crypto.symbol.toUpperCase()})`}</span>

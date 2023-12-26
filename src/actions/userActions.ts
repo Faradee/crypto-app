@@ -8,10 +8,11 @@ import { signInSchema, signUpSchema } from "./userSchemas";
 
 export const verifyToken = async () => {
   const secret = process.env.SECRET!;
-
-  if (cookies().has("token")) {
+  const token = cookies().get("token")?.value;
+  if (token) {
     try {
-      const uuid = jwt.verify(cookies().get("token")!.value, secret) as string;
+      const uuid = jwt.verify(token, secret) as string;
+
       if (uuid) {
         const foundUser = await prisma.user.findFirst({
           where: {

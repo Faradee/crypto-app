@@ -34,9 +34,13 @@ export const getTotalBuyTransactions = async () => {
       },
     });
     const investments: { [key: string]: { cash: number; color: Array<number> } } = {};
-    if (transactions) {
+    if (transactions.length) {
       for await (const transaction of transactions) {
-        const color = (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb;
+        const status = (await fetch(getIconUrl(transaction.cryptoSymbol))).status;
+        const color =
+          status !== 404
+            ? (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb
+            : [0, 0, 0];
         !investments.hasOwnProperty(transaction.cryptoName)
           ? (investments[transaction.cryptoName] = { cash: transaction.cash, color: color ? color : [0, 0, 0] })
           : (investments[transaction.cryptoName].cash += transaction.cash);
@@ -71,7 +75,11 @@ export const getTotalSellTransactions = async () => {
     const sales: { [key: string]: { cash: number; color: Array<number> } } = {};
     if (transactions) {
       for await (const transaction of transactions) {
-        const color = (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb;
+        const status = (await fetch(getIconUrl(transaction.cryptoSymbol))).status;
+        const color =
+          status !== 404
+            ? (await Vibrant.from(getIconUrl(transaction.cryptoSymbol)).getPalette()).Vibrant?.toJSON().rgb
+            : [0, 0, 0];
         !sales.hasOwnProperty(transaction.cryptoName)
           ? (sales[transaction.cryptoName] = { cash: transaction.cash, color: color ? color : [0, 0, 0] })
           : (sales[transaction.cryptoName].cash += transaction.cash);
