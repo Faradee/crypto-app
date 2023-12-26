@@ -18,6 +18,27 @@ type History = {
   time: number;
   date: string;
 };
+export const searchAsset = async (query: string) => {
+  const headers = new Headers({
+    Authorization: `Bearer ${process.env.COINCAP_KEY}`,
+  });
+  const url = `https://api.coincap.io/v2/assets?search=${query}`;
+  const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
+  const { data } = await res.json();
+  const newData: CryptoData = {};
+  data.map((crypto: any) => {
+    newData[crypto.id] = {
+      id: crypto.id,
+      rank: crypto.rank,
+      marketCap: crypto.marketCapUsd,
+      symbol: crypto.symbol,
+      name: crypto.name,
+      priceUsd: parseFloat(crypto.priceUsd),
+      changePercent24Hr: parseFloat(crypto.changePercent24Hr),
+    };
+  });
+  return newData;
+};
 export const getAssetData = async (cryptoId: string) => {
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
