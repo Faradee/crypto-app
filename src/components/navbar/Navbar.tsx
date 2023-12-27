@@ -8,7 +8,6 @@ import styles from "./navbar.module.scss";
 import AuthContext from "./AuthContext";
 import { signUserOut } from "@/actions/userActions";
 import { RiBitCoinFill, RiLogoutBoxRLine, RiLoginBoxLine } from "react-icons/ri";
-//TODO: FIX ALIGNMENT ON MOBILE
 const Navbar = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const { authorized, setAuthorized } = useContext(AuthContext);

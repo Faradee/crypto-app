@@ -21,17 +21,6 @@ const FormField = (props: FormFieldProps) => {
   const { type, icon, placeholder, rows, onChange, children, name, required, noMargin, className, readOnly } = props;
 
   const Icon = icon; //Решает нерабочее поведение input number в браузерах Firefox
-  const preventFirefoxNumberInput = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (
-      navigator.userAgent.includes("Firefox") &&
-      !/(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|Control|Shift|Alt)/.test(e.key) &&
-      e.key !== "Backspace"
-    ) {
-      e.preventDefault();
-    }
-  };
-
-  const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   return (
     <label
