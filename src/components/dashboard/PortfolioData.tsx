@@ -13,11 +13,12 @@ import { CryptoData, fetchAssetList } from "@/actions/assetActions";
 import FieldSkeleton from "./FieldSkeleton";
 import TotalSales from "./TotalSales";
 import BiggestWorth from "./BiggestWorth";
-
+import styles from "./graphs.module.scss";
 const PortfolioData = () => {
   const [investments, setInvestments] = useState<BuyTransactions>();
   const [rates, setRates] = useState<CryptoData>({});
   const [totalSales, setTotalSales] = useState<SellTotalTransactions>({});
+  const [loading, setLoading] = useState<boolean>(true);
   const symbolMap = useMemo(() => {
     const map: { [key: string]: string } | undefined | false = {};
     if (investments)
@@ -35,6 +36,7 @@ const PortfolioData = () => {
     const fetchData = async () => {
       const totalSales = await getTotalSellTransactions();
       if (totalSales) setTotalSales(totalSales);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -87,14 +89,37 @@ const PortfolioData = () => {
         setRates({ ...rates, ...newData });
       };
   }, [rates]);
+  console.log(totalSales);
   return (
     <>
       {investments && rates ? <PortfolioWorth investments={investments} rates={rates} /> : <FieldSkeleton />}
-      {totalSales && Object.keys(totalSales).length ? <TotalSales sales={totalSales} /> : <FieldSkeleton />}
+      {totalSales && Object.keys(totalSales).length ? (
+        <TotalSales sales={totalSales} />
+      ) : loading ? (
+        <FieldSkeleton />
+      ) : (
+        <Slate>
+          <div className={styles.card}>
+            <h2>Объем продаж токенов</h2>
+            <div className={styles.value}>
+              <span>Список продаж пуст</span>
+            </div>
+          </div>
+        </Slate>
+      )}
       {symbolMap && totalSales && Object.keys(totalSales).length ? (
         <BiggestWorth symbolMap={symbolMap} sales={totalSales} />
-      ) : (
+      ) : loading ? (
         <FieldSkeleton />
+      ) : (
+        <Slate>
+          <div className={styles.card}>
+            <h2>Наиболее проданный токен</h2>
+            <div className={styles.value}>
+              <span>Список продаж пуст</span>
+            </div>
+          </div>
+        </Slate>
       )}
     </>
   );
