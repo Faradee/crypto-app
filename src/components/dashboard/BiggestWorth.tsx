@@ -5,6 +5,7 @@ import styles from "./graphs.module.scss";
 import localeStringPrice from "../priceTable/localeStringPrice";
 import Image from "next/image";
 import { getIconUrl } from "../priceTable/getIconUrl";
+import ImageFallback from "../utils/ImageFallback";
 const BiggestWorth = ({ sales, symbolMap }: { sales: SucessfulSellTotalTransactions; symbolMap: any }) => {
   let biggest: { cash: number; coin: string } = { cash: 0, coin: "none" };
   Object.keys(sales).forEach((sale) => {
@@ -20,7 +21,7 @@ const BiggestWorth = ({ sales, symbolMap }: { sales: SucessfulSellTotalTransacti
         <div className={styles.value}>
           <span>
             {symbolMap[biggest.coin] && (
-              <Image
+              <ImageFallback
                 src={getIconUrl(symbolMap[biggest.coin])}
                 width={30}
                 height={30}

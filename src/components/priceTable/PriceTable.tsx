@@ -32,15 +32,6 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   //Из за стрикт мода первое подключение всегда будет проваливатся в development, в production должно вести себя правильно
   useEffect(() => {
     priceWsRef.current = new WebSocket(url);
-    priceWsRef.current.onopen = () => {
-      console.log("Opening new Websocket connection");
-    };
-    priceWsRef.current.onclose = () => {
-      console.log("Closing Websocket connection");
-    };
-    priceWsRef.current.onerror = () => {
-      console.log("Connection with the server has failed");
-    };
     const wsCurrent = priceWsRef.current;
     return () => {
       wsCurrent.close();

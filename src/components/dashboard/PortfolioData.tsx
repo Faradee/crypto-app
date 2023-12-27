@@ -5,7 +5,9 @@ import Slate from "../containers/Slate";
 import {
   BuyTransactions,
   SellTotalTransactions,
+  SellTransactions,
   getBuyTransactions,
+  getSellTransactions,
   getTotalSellTransactions,
 } from "@/actions/transactionActions";
 import PortfolioWorth from "./PortfolioWorth";
@@ -18,15 +20,17 @@ const PortfolioData = () => {
   const [investments, setInvestments] = useState<BuyTransactions>();
   const [rates, setRates] = useState<CryptoData>({});
   const [totalSales, setTotalSales] = useState<SellTotalTransactions>({});
+  const [sales, setSales] = useState<SellTransactions>();
   const [loading, setLoading] = useState<boolean>(true);
   const symbolMap = useMemo(() => {
     const map: { [key: string]: string } | undefined | false = {};
-    if (investments)
-      investments.filter((investment) => {
-        map[investment.cryptoName] = investment.cryptoSymbol;
+    if (sales)
+      sales.filter((sale) => {
+        map[sale.cryptoName] = sale.cryptoSymbol;
       });
+
     return map;
-  }, [investments]);
+  }, [sales]);
   const ratesWsRef = useRef<WebSocket | null>(null);
   const url = useMemo(() => {
     const assets = Object.keys(rates).join(",");
@@ -35,7 +39,9 @@ const PortfolioData = () => {
   useEffect(() => {
     const fetchData = async () => {
       const totalSales = await getTotalSellTransactions();
+      const sales = await getSellTransactions();
       if (totalSales) setTotalSales(totalSales);
+      if (sales) setSales(sales);
       setLoading(false);
     };
     fetchData();
@@ -60,15 +66,6 @@ const PortfolioData = () => {
   }, []);
   useEffect(() => {
     ratesWsRef.current = new WebSocket(url);
-    ratesWsRef.current.onopen = () => {
-      console.log("Opening new Websocket connection");
-    };
-    ratesWsRef.current.onclose = () => {
-      console.log("Closing Websocket connection");
-    };
-    ratesWsRef.current.onerror = () => {
-      console.log("Connection with the server has failed");
-    };
     const wsCurrent = ratesWsRef.current;
     return () => {
       wsCurrent.close();
@@ -89,7 +86,6 @@ const PortfolioData = () => {
         setRates({ ...rates, ...newData });
       };
   }, [rates]);
-  console.log(totalSales);
   return (
     <>
       {investments && rates ? <PortfolioWorth investments={investments} rates={rates} /> : <FieldSkeleton />}
