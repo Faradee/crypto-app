@@ -1,6 +1,6 @@
 ## Демо сайта
 
-[https://crypto-app-vn.vercel.app/?search=bt](https://crypto-app-vn.vercel.app/?search=bt)
+[https://crypto-app-vn.vercel.app](https://crypto-app-vn.vercel.app)
 
 ## О проекте
 
