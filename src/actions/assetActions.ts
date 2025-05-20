@@ -63,20 +63,24 @@ export const fetchAssets = async (offset: number | string = 0, limit: number | s
   });
   const url = `https://api.coincap.io/v2/assets?limit=${limit}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
-  const { data } = await res.json();
-  const newData: CryptoData = {};
-  data.map((crypto: any) => {
-    newData[crypto.id] = {
-      id: crypto.id,
-      rank: crypto.rank,
-      marketCap: crypto.marketCapUsd,
-      symbol: crypto.symbol,
-      name: crypto.name,
-      priceUsd: parseFloat(crypto.priceUsd),
-      changePercent24Hr: parseFloat(crypto.changePercent24Hr),
-    };
-  });
-  return newData;
+  if (res.status !== 404) {
+    const { data } = await res.json();
+    const newData: CryptoData = {};
+    data.map((crypto: any) => {
+      newData[crypto.id] = {
+        id: crypto.id,
+        rank: crypto.rank,
+        marketCap: crypto.marketCapUsd,
+        symbol: crypto.symbol,
+        name: crypto.name,
+        priceUsd: parseFloat(crypto.priceUsd),
+        changePercent24Hr: parseFloat(crypto.changePercent24Hr),
+      };
+    });
+    return newData;
+  } else {
+    return false;
+  }
 };
 export const fetchAssetList = async (list: string[]) => {
   const uuid = await verifyToken();
