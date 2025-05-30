@@ -53,9 +53,9 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   //     setCurrentData({ ...currentData, ...newData });
   //   };
   // }, [currentData]);
-  // useEffect(() => {
-  //   setCurrentData(data);
-  // }, [data]);
+  useEffect(() => {
+    setCurrentData(data);
+  }, [data]);
   return (
     <div className={styles.tableContainer}>
       <Searchbar />
