@@ -14,7 +14,7 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
   const [page, setPage] = useState<number>(1);
   const url = useMemo(() => {
     const assets = Object.keys(currentData).join(",");
-    return `wss://ws.coincap.io/prices?assets=${assets}`;
+    return `wss://wss.coincap.io/prices?assets=${assets}&apiKey=${process.env.COINCAP_KEY}`;
   }, [currentData]);
   const handleActive = (index: number) => {
     if (index === activeIndex) return true;
@@ -30,32 +30,32 @@ const PriceTable = ({ data }: { data: CryptoData }) => {
     setPage(page + 1);
   };
   //Из за стрикт мода первое подключение всегда будет проваливатся в development, в production должно вести себя правильно
-  useEffect(() => {
-    priceWsRef.current = new WebSocket(url);
-    const wsCurrent = priceWsRef.current;
-    return () => {
-      wsCurrent.close();
-    };
-  }, [url]);
-  useEffect(() => {
-    if (!priceWsRef.current) return;
-    priceWsRef.current.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      const newData: CryptoData = {};
-      Object.keys(data).map((key) => {
-        data[key] = parseFloat(data[key]);
-        newData[key] = {
-          ...currentData[key],
-          priceUsd: data[key],
-        };
-      });
+  // useEffect(() => {
+  //   priceWsRef.current = new WebSocket(url);
+  //   const wsCurrent = priceWsRef.current;
+  //   return () => {
+  //     wsCurrent.close();
+  //   };
+  // }, [url]);
+  // useEffect(() => {
+  //   if (!priceWsRef.current) return;
+  //   priceWsRef.current.onmessage = (message) => {
+  //     const data = JSON.parse(message.data);
+  //     const newData: CryptoData = {};
+  //     Object.keys(data).map((key) => {
+  //       data[key] = parseFloat(data[key]);
+  //       newData[key] = {
+  //         ...currentData[key],
+  //         priceUsd: data[key],
+  //       };
+  //     });
 
-      setCurrentData({ ...currentData, ...newData });
-    };
-  }, [currentData]);
-  useEffect(() => {
-    setCurrentData(data);
-  }, [data]);
+  //     setCurrentData({ ...currentData, ...newData });
+  //   };
+  // }, [currentData]);
+  // useEffect(() => {
+  //   setCurrentData(data);
+  // }, [data]);
   return (
     <div className={styles.tableContainer}>
       <Searchbar />

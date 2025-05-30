@@ -22,7 +22,7 @@ export const searchAsset = async (query: string) => {
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
-  const url = `https://api.coincap.io/v2/assets?search=${query}`;
+  const url = `https://rest.coincap.io/v3/assets?search=${query}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data } = await res.json();
   const newData: CryptoData = {};
@@ -43,7 +43,7 @@ export const getAssetData = async (cryptoId: string) => {
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
-  const url = `https://api.coincap.io/v2/assets/${cryptoId}`;
+  const url = `https://rest.coincap.io/v3/assets/${cryptoId}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data } = await res.json();
   return {
@@ -61,7 +61,7 @@ export const fetchAssets = async (offset: number | string = 0, limit: number | s
   const headers = new Headers({
     Authorization: `Bearer ${process.env.COINCAP_KEY}`,
   });
-  const url = `https://api.coincap.io/v2/assets?limit=${limit}`;
+  const url = `https://rest.coincap.io/v3/assets?limit=${limit}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   if (res.status !== 404) {
     const { data } = await res.json();
@@ -88,7 +88,7 @@ export const fetchAssetList = async (list: string[]) => {
     const headers = new Headers({
       Authorization: `Bearer ${process.env.COINCAP_KEY}`,
     });
-    const url = `https://api.coincap.io/v2/assets?ids=${list.join(",")}`;
+    const url = `https://rest.coincap.io/v3/assets?ids=${list.join(",")}`;
     const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
     const { data } = await res.json();
     const newData: CryptoData = {};
@@ -141,8 +141,7 @@ export const fetchAssetHistory = async (
       start.setDate(start.getDate() - 365);
       break;
   }
-
-  const url = `https://api.coincap.io/v2/assets/${cryptoId}/history?interval=${interval}&start=${start.getTime()}&end=${end}`;
+  const url = `https://rest.coincap.io/v3/assets/${cryptoId}/history?interval=${interval}&start=${start.getTime()}&end=${end}`;
   const res = await fetch(url, { method: "GET", headers, cache: "no-store" });
   const { data }: { data: History[] } = await res.json();
   if (data.length) {
